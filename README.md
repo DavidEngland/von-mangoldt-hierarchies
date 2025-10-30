@@ -1,3 +1,52 @@
+# von-mangoldt-hierarchies — Repository overview & Markdown preview guide
+
+This repository contains research notes and code for von Mangoldt hierarchies, explicit formulas, Stieltjes constants, and related computations.
+
+Quick purpose
+- Research and teaching materials (lecture notes, experiments, notebooks).
+- Use this file for instructions on how to preview Markdown (especially math) consistently.
+
+Previewing Markdown and LaTeX (recommended conventions)
+- Use inline math with single-dollar signs: `$...$`.
+- Use display math with double-dollar signs: `$$ ... $$`.
+- If your previewer supports fenced math blocks, use:
+  ```math
+  \[ ... \]
+  ```
+  or
+  ```math
+  $$ ... $$
+  ```
+- Many Markdown previewers (GitHub, VS Code) do not render LaTeX by default. Recommended options:
+  - VS Code: install the "Markdown+Math" or "Markdown Preview Enhanced" extension.
+  - For interactive notebooks or web previews, use a renderer that supports MathJax/KaTeX.
+
+Recommended editor setup
+1. VS Code + Markdown Preview Enhanced (or Markdown+Math)
+2. In Markdown Preview Enhanced settings enable KaTeX or MathJax rendering.
+3. For high-precision numeric or LaTeX-heavy work, run snippets in Jupyter / Binder with MathJax enabled.
+
+Common preview problems and fixes
+- Unrendered math:
+  - Ensure you use `$...$` (inline) or `$$...$$` (display).
+  - Check previewer extension is installed and enabled.
+- Unclosed code / math fences:
+  - Make sure each triple-fence has a matching closing fence (```).
+  - Avoid nested triple-fences inside other fences.
+- HTML comments (e.g. `<!-- filepath: ... -->`) are OK in Markdown, but if placed inside a fenced code block they will display as literal text; move them above the fence.
+- Filenames with special characters:
+  - Avoid `#`, `%`, and other special characters in filenames (there is a docs file containing `#` in the name — such names can break some previewers). Rename files if possible.
+
+Quick checklist before committing Markdown:
+- [ ] Every code block has a closing fence.
+- [ ] Display math uses `$$ ... $$` or a supported fenced math block.
+- [ ] No stray backslashes escaping Markdown characters unintentionally.
+- [ ] If preview fails, open the Markdown in the recommended previewer/extension.
+
+If you want, I can:
+- produce a script to validate Markdown files for unclosed fences and common LaTeX issues, or
+- propose a lightweight rename for the problematic docs file whose filename contains `#`.
+
 # Von Mangoldt Hierarchies and Explicit Formulas
 
 A research repository investigating the derivatives of the logarithmic derivative of the Riemann zeta function and their connections to prime number theory.
