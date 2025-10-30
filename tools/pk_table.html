@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Zero-residue polynomials P_k table</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:18px}
+label{display:inline-block;margin:6px 0}
+input[type="number"],input[type="text"]{width:120px;margin-left:6px}
+textarea{width:100%;height:120px}
+.table{margin-top:12px;border-collapse:collapse;width:100%}
+.table td,.table th{border:1px solid #ddd;padding:6px;vertical-align:top}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.btn{padding:6px 10px;border:1px solid #777;background:#f6f6f6;cursor:pointer;border-radius:4px}
+.btn:active{transform:translateY(1px)}
+.small{font-size:0.9em;color:#444}
+.footer{margin-top:18px;color:#666;font-size:0.9em}
+</style>
+<!-- MathJax for LaTeX rendering -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+</head>
+<body>
+
+<h2>Zero-residue polynomials P_k(L) — interactive table</h2>
+
+<div class="controls">
+  <div>
+    <label>ρ (real) <input id="rhoRe" type="number" value="0.5" step="any"></label><br>
+    <label>ρ (imag) <input id="rhoIm" type="number" value="14.1347251417347" step="any"></label>
+  </div>
+
+  <div>
+    <label>Max k <input id="maxK" type="number" value="8" min="0"></label><br>
+    <label>Show numeric L <input id="useL" type="checkbox"></label>
+  </div>
+
+  <div>
+    <label>Numeric L value <input id="Lval" type="number" value="10" step="any"></label><br>
+    <button id="compute" class="btn">Compute table</button>
+  </div>
+
+  <div>
+    <button id="exportCsv" class="btn">Export CSV</button><br>
+    <button id="copyLatex" class="btn">Copy LaTeX table</button>
+  </div>
+</div>
+
+<p class="small">Polynomials use variable L = log x. Coefficients are complex where ρ is complex. The recurrence used:
+\\( \\,\rho P_{k+1}(L) + (k+1) P_k(L) = - L^{k+1} \\).</p>
+
+<div id="output"></div>
+
+<div class="footer">
+  Standalone page — no server required. Open in browser, set ρ and max k, then "Compute table".
+</div>
+
+<script>
+// Minimal complex arithmetic
+function C(re, im){ return {re: +re || 0, im: +im || 0}; }
+function cAdd(a,b){ return C(a.re + b.re, a.im + b.im); }
+function cMul(a,b){ return C(a.re*b.re - a.im*b.im, a.re*b.im + a.im*b.re); }
+function cDiv(a,b){
+  const d = b.re*b.re + b.im*b.im;
+  return C((a.re*b.re + a.im*b.im)/d, (a.im*b.re - a.re*b.im)/d);
+}
+function cScale(a,s){ return C(a.re*s, a.im*s); }
+function cNeg(a){ return C(-a.re, -a.im); }
+function cToStr(a, opts){
+  opts = opts||{};
+  const re = Number(a.re.toFixed(opts.dp||8));
+  const im = Number(a.im.toFixed(opts.dp||8));
+  if (Math.abs(im) < 1e-12) return re.toString();
+  if (Math.abs(re) < 1e-12) return im + "i";
+  return re + (im>=0 ? " + " : " - ") + Math.abs(im) + "i";
+}
+
+// compute coefficient arrays: P_k(L) = sum_{j=0}^k c_{k,j} L^j
+function computePolys(rho, maxK){
+  // c0 = [-1/rho]
+  const neg1 = C(-1,0);
+  const invRho = cDiv(C(1,0), rho);
+  const negInvRho = cNeg(invRho);
+  let polys = [];
+  polys[0] = [ negInvRho ]; // degree 0
+  for(let k=0;k<maxK;k++){
+    const cur = polys[k];
+    const next = [];
+    // c_{k+1,j} = -(k+1)/rho * c_{k,j}  for j<=k
+    const factor = cScale(cDiv(C(-1,0), rho), (k+1)); // -(k+1)/rho
+    for(let j=0;j<=k;j++){
+      next[j] = cMul(factor, cur[j]);
+    }
+    // c_{k+1,k+1} = -1/rho = negInvRho
+    next[k+1] = negInvRho;
+    polys.push(next);
+  }
+  return polys;
+}
+
+// format polynomial to LaTeX
+function polyToLatex(coeffs){
+  // coeffs: [c0,c1,...,ck] correspond to L^0..L^k
+  const terms = [];
+  for(let j=coeffs.length-1;j>=0;j--){
+    const c = coeffs[j];
+    const cstr = cToStr(c,{dp:10});
+    if (j === 0) terms.push(`${cstr}`);
+    else if (j === 1) terms.push(`${cstr} L`);
+    else terms.push(`${cstr} L^{${j}}`);
+  }
+  return terms.join(' + ').replace(/\+ -/g,'- ');
+}
+
+// pretty LaTeX with complex numbers rendered as parentheses
+function complexToLatex(c){
+  if (Math.abs(c.im) < 1e-12) return c.re.toPrecision(12);
+  return `(${c.re.toPrecision(10)} ${c.im>=0?'+':'-'} ${Math.abs(c.im).toPrecision(10)}i)`;
+}
+
+function polyToLatexNice(coeffs){
+  const parts=[];
+  for(let j=coeffs.length-1;j>=0;j--){
+    const c = coeffs[j];
+    const cs = complexToLatex(c);
+    if (j===0) parts.push(`${cs}`);
+    else if (j===1) parts.push(`${cs}\\,L`);
+    else parts.push(`${cs}\\,L^{${j}}`);
+  }
+  return parts.join(' + ').replace(/\+\s-\s/g,'- ');
+}
+
+function renderTable(polys, rho, Lval, useLval){
+  const out = document.getElementById('output');
+  let html = `<table class="table"><tr><th>k</th><th>Polynomial P_k(L)</th><th>Coefficients (L^0..L^k)</th>`;
+  if (useLval) html += `<th>P_k(L=${Lval})</th>`;
+  html += `</tr>`;
+  for(let k=0;k<polys.length;k++){
+    const coeffs = polys[k];
+    const latex = polyToLatexNice(coeffs);
+    const coeffsStr = coeffs.map(c=>cToStr(c,{dp:8})).join(', ');
+    html += `<tr><td>${k}</td><td>\\( ${latex} \\)</td><td><code>${coeffsStr}</code></td>`;
+    if (useLval){
+      // evaluate polynomial at numeric L
+      let val = C(0,0);
+      let Lpow = C(1,0);
+      for(let j=0;j<coeffs.length;j++){
+        // term = coeffs[j] * Lval^j
+        if (j===0) Lpow = C(1,0);
+        else Lpow = cMul(Lpow, C(Lval,0));
+        val = cAdd(val, cMul(coeffs[j], Lpow));
+      }
+      html += `<td><code>${cToStr(val,{dp:10})}</code></td>`;
+    }
+    html += `</tr>`;
+  }
+  html += `</table>`;
+  out.innerHTML = html;
+  MathJax.typesetPromise();
+}
+
+function buildCsv(polys){
+  // CSV: k, coeffs (L^0..L^k)
+  const rows=[];
+  for(let k=0;k<polys.length;k++){
+    const row = [k].concat(polys[k].map(c=>`"${cToStr(c,{dp:12})}"`));
+    rows.push(row.join(','));
+  }
+  return rows.join('\n');
+}
+
+document.getElementById('compute').addEventListener('click', ()=>{
+  const re = parseFloat(document.getElementById('rhoRe').value) || 0;
+  const im = parseFloat(document.getElementById('rhoIm').value) || 0;
+  const maxK = Math.max(0, parseInt(document.getElementById('maxK').value) || 0);
+  const useL = document.getElementById('useL').checked;
+  const Lval = parseFloat(document.getElementById('Lval').value) || 0;
+  const rho = C(re,im);
+  const polys = computePolys(rho, maxK);
+  renderTable(polys, rho, Lval, useL);
+  // store last for export
+  window.__last_polys = polys;
+});
+
+document.getElementById('exportCsv').addEventListener('click', ()=>{
+  const polys = window.__last_polys;
+  if(!polys){ alert('Compute table first'); return; }
+  const csv = buildCsv(polys);
+  const blob = new Blob([csv],{type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'P_k_coeffs.csv'; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); },1000);
+});
+
+document.getElementById('copyLatex').addEventListener('click', async ()=>{
+  const polys = window.__last_polys;
+  if(!polys){ alert('Compute table first'); return; }
+  let latex = "\\begin{aligned}\n";
+  for(let k=0;k<polys.length;k++){
+    latex += `P_{${k}}(L) &= ${polyToLatexNice(polys[k])} \\\\\n`;
+  }
+  latex += "\\end{aligned}";
+  try{
+    await navigator.clipboard.writeText(latex);
+    alert('LaTeX copied to clipboard');
+  } catch(e){ alert('Copy failed — your browser may block clipboard'); }
+});
+
+// auto-compute on load
+document.getElementById('compute').click();
+</script>
+
+</body>
+</html>
