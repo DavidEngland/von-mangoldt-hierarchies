@@ -101,3 +101,95 @@ summed over nonnegative integers $m_1,\dots,m_k$ with $\sum j m_j = k$.
 Use cases
 - Differentiating $-\zeta'(s)/\zeta(s)$ repeatedly (hierarchies $\Lambda_k$).
 - Expanding $x^s = e^{s\log x}$ near a zero $s=\rho$ to obtain $P_k(\rho,\log x)$ via residue calculus.
+
+---
+
+## Functional-equation symmetry for d/ds log ζ(1−s)
+
+Setup
+- Completed zeta: $\Lambda^*(s):=\pi^{-s/2}\Gamma(s/2)\zeta(s)$ with $\Lambda^*(s)=\Lambda^*(1-s)$.
+- Log-derivative:
+  $$
+  \frac{d}{ds}\log\Lambda^*(s)
+  = -\tfrac12\log\pi + \tfrac12\psi\!\Big(\tfrac{s}{2}\Big) + \frac{\zeta'}{\zeta}(s).
+  $$
+
+Symmetry gives $\,\frac{d}{ds}\log\Lambda^*(s) = -\frac{d}{ds}\log\Lambda^*(1-s)\,$, hence
+$$
+\frac{\zeta'}{\zeta}(1-s)
+= -\,\frac{\zeta'}{\zeta}(s) \;+\; \log\pi \;-\; \tfrac12\Big[\psi\!\Big(\tfrac{s}{2}\Big)+\psi\!\Big(\tfrac{1-s}{2}\Big)\Big].
+$$
+Therefore
+$$
+\boxed{\,\frac{d}{ds}\log\zeta(1-s)
+= -\frac{\zeta'}{\zeta}(1-s)
+= \frac{\zeta'}{\zeta}(s) \;-\; \log\pi \;+\; \tfrac12\Big[\psi\!\Big(\tfrac{s}{2}\Big)+\psi\!\Big(\tfrac{1-s}{2}\Big)\Big].\,}
+$$
+
+Equivalent sine–Gamma form
+- Using $\zeta(s)=2^{s}\pi^{s-1}\sin\!\big(\tfrac{\pi s}{2}\big)\Gamma(1-s)\zeta(1-s)$,
+  $$
+  \frac{\zeta'}{\zeta}(s)
+  = \log(2\pi) + \tfrac{\pi}{2}\cot\!\Big(\tfrac{\pi s}{2}\Big) - \psi(1-s) - \frac{\zeta'}{\zeta}(1-s),
+  $$
+  hence
+  $$
+  \boxed{\,\frac{d}{ds}\log\zeta(1-s)
+  = \frac{\zeta'}{\zeta}(s) \;-\; \log(2\pi) \;-\; \tfrac{\pi}{2}\cot\!\Big(\tfrac{\pi s}{2}\Big) \;+\; \psi(1-s).\,}
+  $$
+
+Notes
+- The two boxes are equivalent via digamma identities (reflection/duplication).
+- Use either form to move derivatives in explicit formulas from $1-s$ to $s$, isolating smooth $\Gamma$/$\psi$ parts from the oscillatory $\zeta'/\zeta$ part.
+
+---
+
+## Reflection and von Mangoldt hierarchies: pairing identities and insights
+
+What reflection changes (and what it does not)
+- The local zero term x^ρ P_k(ρ, L) comes solely from the pole of order k+1 at s=ρ and the factor x^s/s. This residue mechanism is universal; the polynomial P_k itself is unchanged by invoking the functional equation.
+- The reflection s ↦ 1−s relates ζ′/ζ(1−s) to ζ′/ζ(s) plus Γ/ψ terms (smooth background). Consequently:
+  - The zero set is symmetric: if ρ is a zero, so are 1−ρ, ρ̄, and 1−ρ̄.
+  - The main/smooth term M_{k}(x) changes by explicit Γ/ψ-polynomials in log x; the oscillatory structure (zeros) is reorganized by pairing.
+
+Practical pairing: ρ with 1−ρ (general case)
+- Write ρ = β + iγ and L = log x. Then
+  $$
+  x^{\rho} P_k(\rho,L) \;+\; x^{1-\rho} P_k(1-\rho,L)
+  \;=\; 2\,x^{1/2}\Big[ C^+_{k,\rho}(L)\,\cos(\gamma L)\;+\;C^-_{k,\rho}(L)\,\sin(\gamma L)\Big],
+  $$
+  where the real polynomials C^{±}_{k,\rho}(L) of degree ≤ k are
+  $$
+  C^{\pm}_{k,\rho}(L)
+  \;:=\;\tfrac12\left( x^{\beta-\tfrac12} P_k(\rho,L)\;\pm\; x^{-\beta+\tfrac12} P_k(1-\rho,L)\right).
+  $$
+- Interpretation:
+  - The amplitude scales like x^{1/2} with hyperbolic weights x^{±(\beta-1/2)}. If β is close to 1/2, these weights are benign; far from 1/2, cosh/sinh-like growth appears.
+  - This identity is the reflection-analogue of conjugate pairing and is useful even without RH.
+
+RH simplification (β=1/2)
+- Under RH, 1−ρ = ρ̄ and the simplest stable pairing is conjugation:
+  $$
+  x^{\rho} P_k(\rho,L)\;+\;x^{\bar{\rho}} P_k(\bar{\rho},L)
+  \;=\; 2\,x^{1/2}\,\Re\!\big( e^{i\gamma L}\,P_k(\rho,L)\big),
+  $$
+  a purely real oscillation with frequency γ and degree-k polynomial envelope in L.
+
+Quadruple pairing (off RH, fully real combination)
+- Summing the quad {ρ, 1−ρ, ρ̄, 1−ρ̄} yields a manifestly real contribution:
+  $$
+  \sum_{\sigma\in\{\rho,1-\rho,\bar{\rho},1-\bar{\rho}\}} x^{\sigma} P_k(\sigma,L)
+  \;=\; 2\,x^{1/2}\Big[ A_{k,\rho}(L)\,\cos(\gamma L)\;+\;B_{k,\rho}(L)\,\sin(\gamma L)\Big],
+  $$
+  with A_{k,\rho}, B_{k,\rho} explicit real polynomials (degree ≤ k) built from C^{\pm}_{k,\rho} and their conjugates. This is numerically stable and enforces reality without assuming RH.
+
+Consequences for Ψ_k(x)
+- Reflection lets you reorganize the zero sum in Ψ_k(x) by symmetric pairs around 1/2, separating:
+  - A smooth Γ/ψ-driven part (absorbed into M_k(x) and lower-order log-polynomials), and
+  - A purely oscillatory part written as x^{1/2} times trigonometric polynomials in L.
+- Under RH, every oscillatory mode is x^{1/2} times degree-k trigonometric polynomials; off RH, extra hyperbolic weights x^{±(\beta-1/2)} appear, which can be used to bound individual zero contributions.
+
+Takeaways (implementation)
+- Prefer conjugate pairing under RH: sum ρ and ρ̄ to get 2 x^{1/2} Re(e^{iγ L} P_k(ρ,L)).
+- For general reflection symmetry without RH, pair (ρ, 1−ρ) (or the full quad) to keep sums real and numerically stable; this also cleanly exhibits any dependence on β−1/2.
+- The reflection symmetry does not alter P_k’s algebra; it reorganizes the zero sum and clarifies the smooth Γ/ψ pieces in M_k(x).
