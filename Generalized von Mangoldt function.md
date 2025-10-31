@@ -70,30 +70,22 @@ Arithmetic functions, especially those related to prime counting, factorization,
 
 ---
 
-### 4. Irrationality and Transcendence of Logarithms of Primes
+### 4. On (Transcendence) of Logarithms of Primes — caveats
 
-- **Fact:** For any prime $p$, $\log p$ is irrational (and in fact transcendental).
-- **Reason:** If $\log p$ were rational, then $p = e^q$ for some rational $q$, which is impossible since $e^q$ is transcendental unless $q=0$.
-- **Finite linear combinations:** Any nontrivial finite linear combination $\sum_{i=1}^n a_i \log p_i$ with $a_i \in \mathbb{Q}$ and not all $a_i=0$ is also irrational (and transcendental unless the sum is zero).
-  - This follows from the linear independence of $\{\log p_1, \log p_2, \ldots\}$ over $\mathbb{Q}$.
-  - If $\sum a_i \log p_i$ were rational, then $\prod p_i^{a_i}$ would be a rational power of $e$, which is impossible unless all $a_i=0$.
-
-**Summary:**  
-The set of logarithms of primes is linearly independent over $\mathbb{Q}$. Any nontrivial finite rational linear combination of logs of distinct primes is irrational (and transcendental).
+- It is a deep open problem, in general, whether $\log \alpha$ is transcendental for every nonzero algebraic $\alpha$; there is no general theorem proving $\log p$ is transcendental for all primes $p$.
+- Baker’s theorem implies that nontrivial algebraic linear forms in logarithms of algebraic numbers are transcendental (in particular, they are nonzero), but does not assert that each single $\log \alpha$ is transcendental.
+- Thus, earlier blanket statements like “$\log p$ is transcendental” should be treated as conjectural; use precise formulations:
+  - Linear forms $\sum_j a_j \log \alpha_j$ with algebraic coefficients $a_j$ and algebraic $\alpha_j$ are either zero for algebraic reasons or transcendental (Baker).
+  - Independence/irrationality of specific $\log(\sin(\pi n/q))$ values involve deep results (Baker, Gelfond–Schneider) and case-by-case structure.
 
 ---
 
-### 5. Von Mangoldt Function and Transcendence Framework
+### 5. Von Mangoldt and linear forms in logarithms
 
-The von Mangoldt function $\Lambda(n)$ and its generalizations highlight the arithmetic structure of integers via their prime factorization, especially through logarithms of primes.
+- $\Lambda(n)$ isolates prime powers; expansions involving $\log p$ fall within the scope of linear forms in logarithms.
+- Use Baker’s theorem to argue non-vanishing/transcendence of specific linear combinations when applicable; avoid asserting transcendence of individual logs without additional hypotheses.
 
-- **Irrationality/transcendence:** Since $\Lambda(n)$ singles out $\log p$ for prime powers, and $\log p$ is transcendental for any prime $p$, the function naturally encodes transcendental numbers.
-- **Linear independence:** The fact that $\{\log p\}$ are linearly independent over $\mathbb{Q}$ is central to proofs of irrationality and transcendence for expressions involving prime logs.
-- **Explicit formulas:** In analytic number theory, explicit formulas involving $\Lambda(n)$ can sometimes be used to show that certain sums or series cannot be rational, by reducing them to nontrivial combinations of $\log p$.
-- **Transcendence proofs:** While $\Lambda(n)$ itself is not typically used directly in transcendence proofs, its appearance in formulas and its connection to prime logs can provide the arithmetic structure needed for such arguments.
-
-**Summary:**  
-The von Mangoldt function encodes transcendental numbers via $\log p$ and their combinations. It provides a framework for expressing and analyzing numbers whose irrationality or transcendence can be deduced from the properties of prime logarithms. In practice, transcendence proofs rely on deeper results (e.g., Lindemann–Weierstrass theorem), but von Mangoldt's function helps reveal the underlying prime-based structure.
+> Note: The remainder of this document should avoid unqualified claims of transcendence for $\log$ of algebraic numbers; cite Baker’s theorem for linear forms and specify hypotheses where needed.
 
 ---
 

@@ -124,3 +124,14 @@ Contributors will be:
 ---
 
 *For specific questions about contributions, please contact the research team or open an issue.*
+
+# Contributing (short)
+
+- Mathematics: keep derivations precise; cite sources for nonstandard claims.
+- Computation: prefer Python+mpmath for prototypes; pair conjugate zeros; set precision explicitly.
+- Docs: use `$...$` and `$$...$$`; avoid `#` in filenames; close all fences.
+
+Priorities
+- Verify explicit formulas for k=0,1,2.
+- Stabilize P_k generation and zero-sum evaluation.
+- Add concise figures/CSV outputs for Ψ_k − M_k vs truncated zero sums.

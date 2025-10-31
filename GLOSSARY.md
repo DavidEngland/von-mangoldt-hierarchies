@@ -1,3 +1,12 @@
+# Glossary (minimal)
+
+- Λ(n): von Mangoldt function; log p if n = p^k, else 0.
+- Λ_k(n): hierarchy via $(-1)^k d^k/ds^k[-\zeta'/\zeta] = \sum \Lambda_k(n) n^{-s}$.
+- Ψ_k(x): partial sums $\sum_{n\le x}\Lambda_k(n)$.
+- ρ: nontrivial zero of an L-function (simple, unless stated).
+- P_k(ρ, L): zero–residue polynomial (degree k) in $L=\log x$.
+- γ_n: Stieltjes constants (Laurent coefficients at s=1).
+
 # Mathematical Glossary
 
 ## Core Functions and Constants
@@ -56,13 +65,3 @@ where:
 - **Truncated zero sum**: Finite approximation using first $N$ zeros
 - **High precision arithmetic**: Using libraries like `mpmath` for arbitrary precision
 - **Conjugate pairing**: Summing $\rho$ and $\bar{\rho}$ together for real results
-
-## Related Functions
-
-| Function | Connection | Use |
-|----------|------------|-----|
-| $\pi(x)$ | Prime counting | $\pi(x) \sim \Psi(x)/\log x$ |
-| $\theta(x)$ | Prime sum | $\sum_{p\le x}\log p$ |
-| $J(x)$ | Riemann function | Related to $\Psi(x)$ via Möbius |
-| Bell polynomials | Combinatorial | Cumulant-moment conversions |
-| Hurwitz zeta | Generalization | $\zeta(s,a) = \sum_{n=0}^\infty (n+a)^{-s}$ |

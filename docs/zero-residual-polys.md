@@ -193,13 +193,16 @@ Coefficient/Riordan view
   which matches the “L-polynomial” formula and the coefficient lookup table.
 
 Practical consequences
-- Fast evaluation: use the EGF and Appell properties to build P_k via
-  $P_{k}(L)=\left(\partial_L\right)^k\!\Big[-\int_0^L\frac{d\lambda}{\rho}\,\frac{e^{\lambda\cdot 0}}{1+\frac{0}{\rho}}\Big]$ (or simply the initial-values Appell expansion).
-- Recurrences: from the EGF, the identity $(\rho+t)\sum_k P_k t^k/k!+e^{Lt}=0$ yields
+- Fast evaluation: use the EGF and Appell properties to build P_k via initial values and binomial (Appell) expansion.
+- Recurrences: from $(\rho+t)\sum_{k\ge0}P_k(\rho,L)\,t^k/k! + e^{Lt}=0$, equating coefficients yields the exact linear recurrence
   $$
-  \boxed{\;P_{k+1}(\rho,L)= -\,\rho\,P_k(\rho,L) - L\,\frac{k!}{k!}\,?}
+  \boxed{\;\rho\,P_{k+1}(\rho,L) + (k+1)\,P_k(\rho,L) \;=\; -\,L^{k+1}\;, \qquad k\ge0\;,}
   $$
-  but the Appell/initial-value formula is typically simpler and numerically stable; for code, prefer the Horner or E_k(-Lρ) forms given earlier.
+  i.e.
+  $$
+  P_{k+1}(\rho,L) \;=\; -\,\frac{k+1}{\rho}\,P_k(\rho,L)\;-\;\frac{L^{k+1}}{\rho}.
+  $$
+  This matches the coefficient patterns and the Horner/EGF forms above.
 
 Remark
 - The Appell structure explains why differentiation in L lowers the index and why all the binomial/Horner patterns appear; it’s the umbral backbone of the identities already listed.

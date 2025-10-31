@@ -39,43 +39,18 @@ When adding new documentation:
 - Provide both theory and computational examples
 - Cross-reference related documents
 
-# docs/ — Rendering conventions and troubleshooting
+# docs — Conventions and Preview
 
-This document explains how the Markdown in `/docs` is formatted and how to preview it reliably.
+Conventions
+- Inline math: `$...$`; display: `$$ ... $$`.
+- Code blocks fenced with triple backticks and a language hint where possible.
+- Prefer filenames without spaces or `#` to avoid preview issues.
 
-Conventions used in these notes
-- Inline math: `$...$`
-- Display math: `$$ ... $$` (preferred)
-- Use fenced code blocks for examples:
-  ```python
-  # use triple backticks and specify language when possible
-  ```
-- If your renderer supports it, use fenced math blocks with `math` language:
-  ```math
-  $$ \sum_{n\ge1} \frac{\Lambda(n)}{n^s} $$
-  ```
+Recommended preview
+- VS Code + “Markdown Preview Enhanced” (MathJax/KaTeX enabled).
+- GitHub renders most Markdown but not all math; use local preview for verification.
 
-Recommended previewers
-- VS Code: "Markdown Preview Enhanced" or "Markdown+Math"
-- GitHub web UI: supports basic `$...$` in READMEs only in limited contexts; complex LaTeX may not render.
-- Jupyter / nbviewer: good for notebooks containing LaTeX.
-
-Troubleshooting common issues
-1. Nothing renders as math:
-   - Install and enable the math preview extension.
-   - Reload the editor preview.
-2. Partial rendering or stray characters:
-   - Search for unclosed fences: ````` ``` ````` without matching closing.
-   - Remove stray HTML comments from inside code fences.
-3. File preview broken or empty:
-   - Check the file name for special characters (e.g., `#`). Some previewers mis-handle such names. Consider renaming to remove `#`.
-4. Long LaTeX blocks slow the preview:
-   - Use smaller example snippets or an external TeX renderer for edits.
-
-Quick local validation (manual)
-- Run a lightweight check:
-  - Search for "```" occurrences and confirm even count.
-  - Search for "$$" occurrences and confirm pairs.
-  - Ensure no triple-fence appears inside another triple-fence.
-
-If you want, I can add a small validation script (Python) to the repo that scans all `.md` files for unclosed fences, unmatched `$$`, and filenames with unsafe characters.
+Checklist
+- Ensure every fenced block is closed.
+- Check paired `$$`.
+- Avoid nested triple fences.

@@ -1,3 +1,4 @@
+> Deprecated filename: This duplicate should be renamed or removed. Please use ../../L-functions.md (same content) to avoid preview issues with “#” in the path.
 # L-Functions and Modular Forms in the Context of von Mangoldt Hierarchies
 
 **Level:** Advanced Graduate (Analytic Number Theory)  
@@ -147,7 +148,7 @@ $$\Psi_{\chi}(x) = -\sum_{\rho} \frac{x^{\rho}}{\rho} + O(\log x)$$
 
 ### 3.4 Modular Form Explicit Formula
 
-**For newform $f$ of weight $k \geq 2$:**
+**For newform $f$ of weight $k \geq 2:**
 $$\Psi_f(x) = -\sum_{\rho} \frac{x^{\rho}}{\rho} + \delta_f x^{k-1} + O(x^{(k-1)/2+\epsilon})$$
 
 ### 3.5 Hierarchical Explicit Formulas

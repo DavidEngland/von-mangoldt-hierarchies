@@ -47,7 +47,7 @@ textarea{width:100%;height:120px}
 </div>
 
 <p class="small">Polynomials use variable L = log x. Coefficients are complex where ρ is complex. The recurrence used:
-\\( \\,\rho P_{k+1}(L) + (k+1) P_k(L) = - L^{k+1} \\).</p>
+\\( \\, \rho\,P_{k+1}(L) + (k+1)\,P_k(L) = -\,L^{k+1} \\), so c_{k+1,j} = -((k+1)/ρ) c_{k,j} for j≤k and c_{k+1,k+1} = -1/ρ.</p>
 
 <div id="output"></div>
 
@@ -77,22 +77,18 @@ function cToStr(a, opts){
 
 // compute coefficient arrays: P_k(L) = sum_{j=0}^k c_{k,j} L^j
 function computePolys(rho, maxK){
-  // c0 = [-1/rho]
-  const neg1 = C(-1,0);
   const invRho = cDiv(C(1,0), rho);
   const negInvRho = cNeg(invRho);
   let polys = [];
-  polys[0] = [ negInvRho ]; // degree 0
+  polys[0] = [ negInvRho ]; // P_0(L) = -1/ρ
   for(let k=0;k<maxK;k++){
     const cur = polys[k];
     const next = [];
-    // c_{k+1,j} = -(k+1)/rho * c_{k,j}  for j<=k
-    const factor = cScale(cDiv(C(-1,0), rho), (k+1)); // -(k+1)/rho
+    const factor = cScale(cDiv(C(-1,0), rho), (k+1)); // -(k+1)/ρ
     for(let j=0;j<=k;j++){
       next[j] = cMul(factor, cur[j]);
     }
-    // c_{k+1,k+1} = -1/rho = negInvRho
-    next[k+1] = negInvRho;
+    next[k+1] = negInvRho; // coefficient of L^{k+1} is -1/ρ
     polys.push(next);
   }
   return polys;

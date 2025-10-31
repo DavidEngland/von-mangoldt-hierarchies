@@ -258,14 +258,14 @@ or
 
 ⸻
 
-+Standalone HTML/JS demo (no Python required)
-+
-+A self-contained browser demo (stieltjes_demo.html) is included with:
-+	• interactive computation of \gamma_n from the classical limit formula,
-+	• compensated summation for improved stability,
-+	• interactive plots (Plotly.js) of scaled coefficients (e.g. \gamma_n/n!),
-+	• CSV export of computed data and short precision notes.
-+
-+Notes:
-+	• This uses native JavaScript double precision; it is reliable for moderate n (say n ≤ 50) and reasonable truncation m. For high-precision work use a WASM-based backend (Pyodide) or a dedicated arbitrary-precision library.
-+	• Open stieltjes_demo.html in any modern browser.
+## Standalone HTML/JS demo (no Python required)
+
+A self-contained browser demo (stieltjes_demo.html) includes:
+- Interactive computation of γ_n from the classical limit formula
+- Compensated summation for improved stability
+- Plots (Plotly.js) of scaled coefficients γ_n/n!
+- CSV export and precision notes
+
+Notes:
+- Uses native JS double precision; reliable for moderate n (≈≤50). For high precision, consider Pyodide or arbitrary-precision libs.
+- Open stieltjes_demo.html in any modern browser.
