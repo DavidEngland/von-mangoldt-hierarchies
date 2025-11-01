@@ -104,46 +104,6 @@ Use cases
 
 ---
 
-## Functional-equation symmetry for d/ds log ζ(1−s)
-
-Setup
-- Completed zeta: $\Lambda^*(s):=\pi^{-s/2}\Gamma(s/2)\zeta(s)$ with $\Lambda^*(s)=\Lambda^*(1-s)$.
-- Log-derivative:
-  $$
-  \frac{d}{ds}\log\Lambda^*(s)
-  = -\tfrac12\log\pi + \tfrac12\psi\!\Big(\tfrac{s}{2}\Big) + \frac{\zeta'}{\zeta}(s).
-  $$
-
-Symmetry gives $\,\frac{d}{ds}\log\Lambda^*(s) = -\frac{d}{ds}\log\Lambda^*(1-s)\,$, hence
-$$
-\frac{\zeta'}{\zeta}(1-s)
-= -\,\frac{\zeta'}{\zeta}(s) \;+\; \log\pi \;-\; \tfrac12\Big[\psi\!\Big(\tfrac{s}{2}\Big)+\psi\!\Big(\tfrac{1-s}{2}\Big)\Big].
-$$
-Therefore
-$$
-\boxed{\,\frac{d}{ds}\log\zeta(1-s)
-= -\frac{\zeta'}{\zeta}(1-s)
-= \frac{\zeta'}{\zeta}(s) \;-\; \log\pi \;+\; \tfrac12\Big[\psi\!\Big(\tfrac{s}{2}\Big)+\psi\!\Big(\tfrac{1-s}{2}\Big)\Big].\,}
-$$
-
-Equivalent sine–Gamma form
-- Using $\zeta(s)=2^{s}\pi^{s-1}\sin\!\big(\tfrac{\pi s}{2}\big)\Gamma(1-s)\zeta(1-s)$,
-  $$
-  \frac{\zeta'}{\zeta}(s)
-  = \log(2\pi) + \tfrac{\pi}{2}\cot\!\Big(\tfrac{\pi s}{2}\Big) - \psi(1-s) - \frac{\zeta'}{\zeta}(1-s),
-  $$
-  hence
-  $$
-  \boxed{\,\frac{d}{ds}\log\zeta(1-s)
-  = \frac{\zeta'}{\zeta}(s) \;-\; \log(2\pi) \;-\; \tfrac{\pi}{2}\cot\!\Big(\tfrac{\pi s}{2}\Big) \;+\; \psi(1-s).\,}
-  $$
-
-Notes
-- The two boxes are equivalent via digamma identities (reflection/duplication).
-- Use either form to move derivatives in explicit formulas from $1-s$ to $s$, isolating smooth $\Gamma$/$\psi$ parts from the oscillatory $\zeta'/\zeta$ part.
-
----
-
 ## Reflection and von Mangoldt hierarchies: pairing identities and insights
 
 What reflection changes (and what it does not)
@@ -152,44 +112,71 @@ What reflection changes (and what it does not)
   - The zero set is symmetric: if ρ is a zero, so are 1−ρ, ρ̄, and 1−ρ̄.
   - The main/smooth term M_{k}(x) changes by explicit Γ/ψ-polynomials in log x; the oscillatory structure (zeros) is reorganized by pairing.
 
-Practical pairing: ρ with 1−ρ (general case)
+Practical pairing: ρ with 1−ρ (general case) 
 - Write ρ = β + iγ and L = log x. Then
   $$
   x^{\rho} P_k(\rho,L) \;+\; x^{1-\rho} P_k(1-\rho,L)
   \;=\; 2\,x^{1/2}\Big[ C^+_{k,\rho}(L)\,\cos(\gamma L)\;+\;C^-_{k,\rho}(L)\,\sin(\gamma L)\Big],
   $$
-  where the real polynomials C^{±}_{k,\rho}(L) of degree ≤ k are
-  $$
-  C^{\pm}_{k,\rho}(L)
-  \;:=\;\tfrac12\left( x^{\beta-\tfrac12} P_k(\rho,L)\;\pm\; x^{-\beta+\tfrac12} P_k(1-\rho,L)\right).
-  $$
-- Interpretation:
-  - The amplitude scales like x^{1/2} with hyperbolic weights x^{±(\beta-1/2)}. If β is close to 1/2, these weights are benign; far from 1/2, cosh/sinh-like growth appears.
-  - This identity is the reflection-analogue of conjugate pairing and is useful even without RH.
+  where (derivation below) the amplitude polynomials $C^{\pm}_{k,\rho}(L)$ (degree ≤ k) arise by rewriting the two exponentials as cos/sin.
 
-RH simplification (β=1/2)
-- Under RH, 1−ρ = ρ̄ and the simplest stable pairing is conjugation:
+Derivation (algebraic, no orthogonality used)
+- Set
   $$
-  x^{\rho} P_k(\rho,L)\;+\;x^{\bar{\rho}} P_k(\bar{\rho},L)
-  \;=\; 2\,x^{1/2}\,\Re\!\big( e^{i\gamma L}\,P_k(\rho,L)\big),
+  A(L):=x^{\beta-\tfrac12}\,P_k(\rho,L),\qquad
+  B(L):=x^{-\beta+\tfrac12}\,P_k(1-\rho,L).
   $$
-  a purely real oscillation with frequency γ and degree-k polynomial envelope in L.
+  Then
+  $$
+  x^{\rho} P_k(\rho,L) + x^{1-\rho} P_k(1-\rho,L)
+  \;=\; x^{1/2}\Big( A(L)\,e^{i\gamma L} + B(L)\,e^{-i\gamma L}\Big).
+  $$
+  Using $e^{\pm i\gamma L}=\cos(\gamma L)\pm i\sin(\gamma L)$ gives
+  $$
+  x^{\rho} P_k(\rho,L) + x^{1-\rho} P_k(1-\rho,L)
+  \;=\; 2x^{1/2}\Big(\underbrace{\tfrac{A+B}{2}}\_{=:C^+_{k,\rho}(L)}\cos(\gamma L)\;+\;\underbrace{\tfrac{A-B}{2i}}\_{=:C^-_{k,\rho}(L)}\sin(\gamma L)\Big).
+  $$
+  Hence the explicit formulas
+  $$
+  \boxed{\;C^+_{k,\rho}(L)=\tfrac12\big(x^{\beta-\tfrac12}P_k(\rho,L)+x^{-\beta+\tfrac12}P_k(1-\rho,L)\big),\;}
+  $$
+  $$
+  \boxed{\;C^-_{k,\rho}(L)=\tfrac{1}{2i}\big(x^{\beta-\tfrac12}P_k(\rho,L)-x^{-\beta+\tfrac12}P_k(1-\rho,L)\big).\;}
+  $$
+  These are polynomials in $L$ of degree ≤ k with coefficients depending on $\rho$ (via $P_k$) and on $x$ through the scalar weights $x^{\pm(\beta-1/2)}$.
 
-Quadruple pairing (off RH, fully real combination)
-- Summing the quad {ρ, 1−ρ, ρ̄, 1−ρ̄} yields a manifestly real contribution:
+Are $C^{\pm}_{k,\rho}(L)$ real? When do we prefer quad pairing?
+- In general (off RH), $C^{\pm}_{k,\rho}(L)$ need not be real. A manifestly real combination is obtained by adding the conjugate pair:
   $$
-  \sum_{\sigma\in\{\rho,1-\rho,\bar{\rho},1-\bar{\rho}\}} x^{\sigma} P_k(\sigma,L)
-  \;=\; 2\,x^{1/2}\Big[ A_{k,\rho}(L)\,\cos(\gamma L)\;+\;B_{k,\rho}(L)\,\sin(\gamma L)\Big],
+  \Big[x^{\rho} P_k(\rho,L) + x^{1-\rho} P_k(1-\rho,L)\Big] \;+\; \overline{\Big[x^{\rho} P_k(\rho,L) + x^{1-\rho} P_k(1-\rho,L)\Big]},
   $$
-  with A_{k,\rho}, B_{k,\rho} explicit real polynomials (degree ≤ k) built from C^{\pm}_{k,\rho} and their conjugates. This is numerically stable and enforces reality without assuming RH.
+  which equals
+  $$
+  2\,x^{1/2}\Big[ A_{k,\rho}(L)\,\cos(\gamma L)+B_{k,\rho}(L)\,\sin(\gamma L)\Big],
+  $$
+  with the real polynomials
+  $$
+  \boxed{\;A_{k,\rho}(L)=\Re\!\big(A(L)+B(L)\big),\qquad B_{k,\rho}(L)=\Im\!\big(A(L)-B(L)\big).\;}
+  $$
+  This “quadruple pairing” {ρ,1−ρ,ρ̄,1−ρ̄} is the robust default off RH.
+- Under RH (β=1/2), $x^{\beta-1/2}=1$ and $1-\rho=\bar\rho$, while $P_k(\bar\rho,L)=\overline{P_k(\rho,L)}$ for real $L$. Then
+  $$
+  A(L)=P_k(\rho,L),\quad B(L)=P_k(1-\rho,L)=\overline{P_k(\rho,L)},
+  $$
+  so $C^+_{k,\rho}(L)=\Re P_k(\rho,L)$ and $C^-_{k,\rho}(L)=\Im P_k(\rho,L)$ are real. In this case the simpler conjugate pairing {ρ,ρ̄} already yields a real-valued contribution:
+  $$
+  x^{\rho}P_k(\rho,L)+x^{\bar\rho}P_k(\bar\rho,L)=2\,x^{1/2}\,\Re\!\big(e^{i\gamma L}P_k(\rho,L)\big).
+  $$
 
-Consequences for Ψ_k(x)
-- Reflection lets you reorganize the zero sum in Ψ_k(x) by symmetric pairs around 1/2, separating:
-  - A smooth Γ/ψ-driven part (absorbed into M_k(x) and lower-order log-polynomials), and
-  - A purely oscillatory part written as x^{1/2} times trigonometric polynomials in L.
-- Under RH, every oscillatory mode is x^{1/2} times degree-k trigonometric polynomials; off RH, extra hyperbolic weights x^{±(\beta-1/2)} appear, which can be used to bound individual zero contributions.
+Why (and when) pairing is “practical”
+- Numerical stability: pairing exponentials with opposite phases reduces cancellation error and enforces real outputs (critical for plotting/verification).
+- Structure: pairing isolates the oscillatory factor $e^{\pm i\gamma L}$ and leaves degree‑k envelopes $C^{\pm}_{k,\rho}(L)$; under RH these envelopes are simply the real/imaginary parts of $P_k$.
+- Scaling: the prefactor $x^{1/2}$ is universal; off RH, the extra hyperbolic weights $x^{\pm(\beta-1/2)}$ live inside $C^{\pm}$, making β−1/2 dependence explicit.
 
-Takeaways (implementation)
-- Prefer conjugate pairing under RH: sum ρ and ρ̄ to get 2 x^{1/2} Re(e^{iγ L} P_k(ρ,L)).
-- For general reflection symmetry without RH, pair (ρ, 1−ρ) (or the full quad) to keep sums real and numerically stable; this also cleanly exhibits any dependence on β−1/2.
-- The reflection symmetry does not alter P_k’s algebra; it reorganizes the zero sum and clarifies the smooth Γ/ψ pieces in M_k(x).
+Are $C^{\pm}_{k,\rho}(L)$ “Fourier coefficients”?
+- Not in the projection/orthogonality sense. No inner product or integration over a period is used here.
+- They are algebraic amplitudes obtained by rewriting a two‑mode exponential sum $A e^{i\gamma L}+B e^{-i\gamma L}$ as a cos/sin combination. In that sense they play the role of “instantaneous Fourier amplitudes,” but they depend polynomially on $L$ and on $\rho$; they are not constants extracted via a Fourier transform.
+
+Implementation tip
+- Under RH: use conjugate pairing and set $C^+=\Re P_k(\rho,L)$, $C^-=\Im P_k(\rho,L)$ (fastest, real).
+- Off RH: use the quad sum and $A_{k,\rho},B_{k,\rho}$ as above to guarantee real polynomials multiplying cos/sin.
