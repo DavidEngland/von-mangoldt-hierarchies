@@ -127,11 +127,19 @@ Contributors will be:
 
 # Contributing (short)
 
-- Mathematics: keep derivations precise; cite sources for nonstandard claims.
-- Computation: prefer Python+mpmath for prototypes; pair conjugate zeros; set precision explicitly.
-- Docs: use `$...$` and `$$...$$`; avoid `#` in filenames; close all fences.
+Style and math
+- Keep derivations precise; cite sources for nonstandard claims
+- Inline math: $...$; display: $$ ... $$; close all fences
+- Notation: L := log x (not an L-function). In EGFs, e^{Lt} = x^{t}
+- Prefer filenames without spaces or ‘#’; use lower_snake_case where possible
 
-Priorities
-- Verify explicit formulas for k=0,1,2.
-- Stabilize P_k generation and zero-sum evaluation.
-- Add concise figures/CSV outputs for Ψ_k − M_k vs truncated zero sums.
+Core identities to reuse
+- EGF: ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t)
+- Recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}
+- Appell: ∂_L P_k = k P_{k-1}; ∂_x P_k = (k/x) P_{k-1}
+
+PR checklist
+- Math renders in GitHub and VS Code (Markdown Preview Enhanced)
+- Pair conjugate zeros (or use quadruplets) in any numeric examples
+- If adding docs, update docs/README.md index
+- If adding tools, include minimal usage notes and defaults

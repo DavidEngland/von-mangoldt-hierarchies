@@ -54,3 +54,26 @@ Checklist
 - Ensure every fenced block is closed.
 - Check paired `$$`.
 - Avoid nested triple fences.
+
+# Documentation index and conventions
+
+Notation sanity
+- L := log x (not an L-function). In EGFs with parameter t, e^{Lt} = x^{t}.
+- ρ = β + iγ denotes a (simple) zero; Q(ρ) = {ρ, 1−ρ, ρ̄, 1−ρ̄}.
+
+Core documents
+- zero-residual-polys.md — P_k closed forms, EGF, recurrence, Appell links, trivial zeros note.
+- Leibniz Rule.md — residue derivation, functional-equation symmetry, practical pairing; C^{±}_{k,ρ}(L) derivation.
+- Compact formula.md — cheat sheet, examples, and problem sets (Masters/PhD).
+- Hierarchy Interdependence Theorem.md — ∂_L and ∂_x identities; ODEs and prompts.
+- ../quad upon generating function.md — quadruplet EGF kernel, harmonic decomposition, “implications if RH holds”.
+
+Rendering conventions
+- Inline math: $...$; display math: $$ ... $$.
+- Close every fenced code block. Avoid nested triple fences.
+- Prefer filenames without spaces or special characters.
+
+Quick references
+- EGF: ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t).
+- Recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
+- Appell: ∂_L P_k = k P_{k-1}. Chain-rule: ∂_x P_k = (k/x) P_{k-1}.

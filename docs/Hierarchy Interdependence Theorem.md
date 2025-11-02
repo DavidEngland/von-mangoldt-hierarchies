@@ -88,56 +88,45 @@ Exercises (Masters → PhD)
 
 ---
 
-## Chain rule in x (L = log x): ODEs and practical use
+## 📜 Hierarchy Interdependence Theorem — ∂_L and ∂_x forms
 
-Since L = log x, we have dL/dx = 1/x and therefore
-- ∂_L P_k(ρ,L) = k P_{k-1}(ρ,L)  (Appell property),
-- ∂_x P_k(ρ,L) = (1/x) ∂_L P_k(ρ,L) = (k/x) P_{k-1}(ρ,L).
+Setup
+- L := log x; O_k(ρ,x) := x^ρ P_k(ρ,L).
+- Appell: ∂_L P_k = k P_{k-1}. Recurrence: ρ P_k + k P_{k-1} = − L^k.
 
-For the full zero term O_k(ρ,x) := x^ρ P_k(ρ,L), the product rule and the k–recurrence give
-- d/dx [x^ρ P_k(ρ,L)]
-  = ρ x^{ρ-1} P_k(ρ,L) + x^ρ (k/x) P_{k-1}(ρ,L)
-  = x^{ρ-1}[ρ P_k + k P_{k-1}]
-  = - x^{ρ-1} L^k,
-- equivalently, the compact ODE
+Theorem (∂_L operator on zero terms)
+$$
+\frac{\partial}{\partial L}\big[x^{\rho} P_k(\rho,L)\big]
+= x^{\rho}\,\big(\rho P_k(\rho,L) + k P_{k-1}(\rho,L)\big)
+= -\,x^{\rho}\,L^k.
+$$
+
+Chain rule in x (since dL/dx = 1/x)
+- ∂_x P_k = (1/x) ∂_L P_k = (k/x) P_{k-1}.
+- ODE for a single zero term:
   $$
   \boxed{\,x\,\frac{d}{dx}\big[x^{\rho}P_k(\rho,L)\big] \;=\; -\,x^{\rho}\,L^k\,.}
   $$
 
-Consequences (sum over zeros)
-- Let S_k(x) := ∑_ρ x^ρ P_k(ρ, L). Then
-  $$
-  \boxed{\,x\,\frac{d}{dx} S_k(x) \;=\; - \sum_{\rho} x^{\rho} L^k\,.}
-  $$
-  Under conjugate or quadruplet pairing this is a real ODE in x with right-hand side x^{1/2} times trigonometric polynomials in L.
+Consequences (zero-sum)
+- For S_k(x) := ∑_ρ x^ρ P_k(ρ,L):  x dS_k/dx = − ∑_ρ x^ρ L^k.
+- Under conjugate pairing or quadruplets, the RHS is real and expressed by x^{1/2} times trigonometric polynomials in L.
 
-Second derivative (optional)
-- From x d/dx[x^ρ P_k] = −x^ρ L^k one gets
-  $$
-  x^2\,\frac{d^2}{dx^2}\big[x^{\rho}P_k\big]
-  = -\,x^{\rho}\big(\rho\,L^k + k\,L^{k-1}\big).
-  $$
+Examples
+- k=1: from P_1 = −L/ρ + 1/ρ^2 and P_0 = −1/ρ, we get ρP_1 + P_0 = −L.
+- k=2: differentiate x^ρ P_2(ρ,L) in L, simplify via the recurrence to −x^ρ L^2.
 
 Implementation prompts (no code)
-- March in x using the ODE (single zero):
+- March in L:
   ```
-  // inputs: rho, k, x0, L0=log x0, initial T0 = x0^rho * P_k(rho, L0)
-  // step x -> x * exp(h), i.e., L -> L + h
-  for steps:
-      // RHS at current (x,L): R = - x^rho * L^k
-      T_next = T + h * R            // since x d/dx T = d/dL T; step in L by h
-      L += h;  x = exp(L);  T = T_next
+  // ODE: d/dL [ x^rho P_k ] = - x^rho L^k
+  T_next = T - h * x^rho * L^k   // step L -> L+h
   ```
-- March the summed oscillation (paired zeros or quadruplets):
+- Build P_k from P_{k-1} across zeros:
   ```
-  // S_k(L) = sum x^rho P_k(rho,L)
-  // ODE: d/dL S_k = - sum x^rho L^k
-  for steps in L:
-      RHS = - sum_over_pairs [ 2 * x^(1/2) * Re( e^{i gamma L} * L^k ) ]   // RH implications; otherwise use quadruplets
-      S_k_next = S_k + h * RHS
+  Pk = ( -L^k - k*P_{k-1} ) / rho
   ```
-- Mixed derivatives:
+- Quadruplet sweep:
   ```
-  // use: ∂_x P_k = (k/x) P_{k-1}, and ∂_L P_k = k P_{k-1}
-  // convert any needed ∂_x to ∂_L via ∂_x = (1/x) ∂_L
+  S_k(L) = d^k/dt^k [ - sum_{σ∈Q(ρ)} e^{(σ+t)L}/(σ+t) ] at t=0
   ```

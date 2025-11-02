@@ -1,19 +1,39 @@
 # Von Mangoldt Hierarchies — Research Notes
 
-Purpose
-- Investigate derivatives of the logarithmic derivative of the Riemann zeta function and their connections to prime number theory (von Mangoldt hierarchies, explicit formulas, Stieltjes constants).
+What this repo contains
+- Zero–residue polynomials P_k(ρ, L) with EGF and linear recurrence in k
+- Explicit formula structure for Ψ_k(x) with main terms (Stieltjes constants) + zero sums
+- Pairing/reflection identities (conjugate, reflection, quadruplet)
+- Masters/PhD-ready examples, exercises, and computational prompts (no code required)
+- A standalone HTML tool to generate tables of P_k
 
-Quick start
-- Read docs/zero-residual-polys.md for the zero-residue polynomials P_k(ρ, log x).
-- See L-functions.md for the modular/L-function extension.
-- Open tools/pk_table.html in a browser to generate P_k tables interactively.
+Notation and key identities
+- L := log x (not an L-function). In EGFs, e^{Lt} = x^{t}.
+- EGF (in k): ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t).
+- Linear recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
+- Appell property: ∂_L P_k = k P_{k-1}.
+- Chain rule: ∂_x P_k = (k/x) P_{k-1}.
+- Single-zero ODE: x d/dx [x^ρ P_k] = − x^ρ L^k.
 
-Math rendering conventions
-- Inline math: `$...$`
-- Display math: `$$ ... $$`
-- Use a previewer that supports MathJax/KaTeX (e.g., VS Code “Markdown Preview Enhanced”).
-- Avoid filenames containing `#` (see docs/# L-Functions and Modular Forms.md deprecation note).
+Pairing and reflection (oscillatory sums)
+- Conjugate pairing (RH implications): x^ρ P_k + x^{ρ̄} P_k(ρ̄, L) = 2 x^{1/2} Re(e^{iγL} P_k(ρ,L)).
+- Quadruplet (always real): sum over {ρ, 1−ρ, ρ̄, 1−ρ̄} gives 2 x^{1/2}[A_k(L) cos(γL) + B_k(L) sin(γL)].
+- The polynomial P_k is universal for simple zeros; reflection reorganizes sums and adds smooth Γ/ψ pieces to main terms.
 
-Repository tips
-- Pair conjugate zeros when summing oscillatory terms.
-- Use the recurrence `ρ P_{k+1} + (k+1) P_k = - L^{k+1}` for stable P_k generation.
+Start here (core docs)
+- docs/zero-residual-polys.md — definitions, closed forms, EGF, recurrence, Bernoulli/Euler Appell connections.
+- docs/Leibniz Rule.md — residue derivation of P_k via Leibniz, functional-equation symmetry, reflection pairing.
+- docs/Compact formula.md — compact formulas + Masters/PhD exercises and computational prompts.
+- docs/Hierarchy Interdependence Theorem.md — ∂_L and ∂_x interdependence; ODEs for zero terms.
+- quad upon generating function.md — quadruplet EGF kernel and coefficient extraction.
+
+Tools
+- tools/pk_table.html — standalone browser page to compute and render P_k tables; supports CSV/LaTeX.
+
+Conventions and rendering
+- Inline math: $...$, display math: $$ ... $$.
+- Prefer filenames without spaces or ‘#’.
+- Use a previewer supporting MathJax/KaTeX (e.g., VS Code “Markdown Preview Enhanced”).
+
+Contributing
+- See CONTRIBUTING.md for style, math conventions, and PR checklist.

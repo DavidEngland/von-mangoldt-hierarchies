@@ -160,19 +160,18 @@ We're developing tools that could eventually contribute to:
 # Research opportunity: von Mangoldt hierarchies and zeta
 
 What you’ll do
-- Study generalized von Mangoldt functions Λ_k and explicit formulas.
-- Connect Stieltjes constants, residues, and zeros to prime oscillations.
-- Build computational tools (Python/Julia) to test predictions.
+- Study Λ_k(n), explicit formulas, and zero-residue polynomials P_k(ρ, log x)
+- Connect Stieltjes constants, residues, and zeros to prime oscillations
+- Build small computational tools to test predictions
 
 Great fit if you enjoy
 - Complex analysis, Dirichlet series, L-functions
 - Algorithms, high-precision numerics, visualization
-- Linking theory and computation
 
 Starter projects
-- Compute Ψ_k(x) for k=0,1,2 via prime powers; compare to main term M_k(x).
-- Implement the zero–residue polynomials P_k(ρ, log x) and truncated zero sums.
-- Visualize Ψ_k(x) − M_k(x) against zero-sum approximations.
+- Compute Ψ_k(x) for k=0,1,2 via prime powers; compare to M_k(x)
+- Implement P_k(ρ, log x) and truncated zero sums (paired/quadruplet)
+- Visualize Ψ_k(x) − M_k(x) vs zero-sum approximations
 
 Contact
 - Repo: this project
