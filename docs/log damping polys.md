@@ -65,6 +65,23 @@ $$
 \rho P_{k+1}(\rho,L) + (k+1) P_{k}(\rho,L) = -L^{k+1}
 $$
 
+### Derivative in x via chain rule
+
+With L = log x and O_k(ρ,x) := x^{\rho} P_k(ρ,L),
+- ∂_x P_k(ρ,L) = (k/x) P_{k-1}(ρ,L),
+- Product rule + recurrence give the compact ODE
+  $$
+  \boxed{\,x\,\frac{d}{dx}\,O_k(\rho,x) \;=\; -\,x^{\rho}\,L^k\,.}
+  $$
+Thus stepping in L (i.e., x → x e^{h}) advances O_k by
+  $$
+  O_k(L+h) \approx O_k(L) - h\,x^{\rho}\,L^k,
+  $$
+with higher-order corrections obtainable by standard ODE integrators in L.
+
+Practical note
+- Use this ODE to propagate the summed oscillation in L across a grid, pairing conjugates (or quadruplets) to keep the evolution real and stable.
+
 ## 📦 The Final Recurrence Relation
 
 The correct recurrence relation for the zero-residue polynomials is:

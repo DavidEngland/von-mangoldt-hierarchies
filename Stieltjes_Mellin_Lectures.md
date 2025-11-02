@@ -294,3 +294,60 @@ Would you like me to now:
 	•	add code snippets (Python/mpmath) for students to compute \Psi_k(x), \gamma_n, and G(t),
 or
 	•	add visual aids (e.g., schematic plots of contours, zero locations, or cumulant diagrams) to accompany the lectures?
+
+## Masters and PhD problem bank (compact, practice-ready)
+
+Masters (conceptual + light computation)
+1) P_k sanity suite
+- Verify for k=0..3 that the truncated-exponential and falling-factorial forms agree symbolically.
+- Show deg_L P_k = k and the top term is −L^k/ρ.
+
+2) Main term practice
+- Starting from ζ(1+u)=1/u+∑(−1)^n γ_n u^n/n!, derive M_k(x)=xL^k−∑_{m≤k} binom(k,m)γ_m x L^{k−m}.
+
+3) Pairing and reflection
+- For a given ρ=1/2+iγ, show that the conjugate pair contribution is 2x^{1/2} Re(e^{iγL}P_k(ρ,L)). Explain why this is real for real L.
+
+4) Prompt: zero-sum evaluation (fixed k)
+```
+input: zeros {rho_j with Im>0}, L, k
+for each rho: compute P_k(rho, L) via truncated-exponential
+S_k(L) = 2 * sum_j x^(1/2) * Re( exp(i*Im(rho_j)*L) * P_k(rho_j, L) )
+```
+
+PhD (derivations + robust numerics)
+5) Interdependence operator
+- Prove ∂_L[x^ρ P_k]=−x^ρ L^k and derive the aggregated consequence for a quadruplet sum.
+
+6) Quadruplet EGF extraction
+- Start from S_quad(t;L)=−∑_{σ∈Q} e^{(σ+t)L}/(σ+t) and show that S_k(L)=d^k/dt^k S_quad|_{t=0} matches the recurrence-generated S_k(L).
+
+7) Prompt: recurrence propagation across k
+```
+input: zeros {rho}, L, Kmax
+P0[rho] = -1/rho
+for k in 1..Kmax:
+    Pk[rho] = ( -L^k - k*P_{k-1}[rho] ) / rho
+S_k(L) = sum_{rho paired} x^(rho) * Pk[rho]   // conjugate or quadruplet pairing
+```
+
+8) Prompt: EGF validation
+```
+Goal: verify sum_{k} P_k t^k/k! = -e^{Lt}/(rho+t)
+Compute left-hand side numerically for small t-grid, compare to right-hand side; report max relative error
+```
+
+9) Stieltjes EGF and zeros
+- Using G(t)=ζ(1−t)+1/t, explain why the singularities at t=1−ρ control the large-n growth of γ_n. Outline a saddle-point setup; list the contour choice and contributions to leading order.
+
+10) Prompt: trivial zero corrections
+```
+Goal: quantify trivial zeros in Psi_k
+Compute T_k(x) = sum_{m>=1} x^{-2m} P_k(-2m, log x)
+For k=0, show T_0(x) = -1/2 log(1 - x^{-2})
+For k>=1, express T_k via polylog Li_s(x^{-2}) + polynomials in log x
+```
+
+Assessment guide
+- Masters submissions: algebraic checks, short derivations, and numeric verification with concise plots.
+- PhD submissions: full derivations, numerically stable implementations (paired sums, precision control), and careful error tracking in EGF validations.

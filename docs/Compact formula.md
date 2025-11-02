@@ -1,107 +1,110 @@
-A. Compact formula (Leibniz form)
+# Compact formulas for P_k(ρ,L) — cheat sheet + problem set
 
-Write
-\Delta(s)\;:=\;\log\gamma(s)-\log\gamma(1-s),
-\qquad\text{so}\qquad
-\mathcal{G}_k(s)=(-1)^k\frac{d^k}{ds^k}\Delta(s).
+Notation
+- L := log x, ρ a simple zero, u := 1/ρ, E_k(z) := ∑_{j=0}^k z^j/j!.
 
-One convenient and transparent way to record the way the analytic gamma–correction produces a polynomial in L=\log x is the following (Leibniz) representation — for each k\ge0 define
-\boxed{\;
-H_k(\rho,L)\;=\;\sum_{r=0}^{k} \frac{(-1)^r}{r!}\,\Delta^{(r+1)}(\rho)\;L^{\,k-r}.
-\;} \tag{★}
+Core identities (simple zero)
+- Truncated exponential
+  $$
+  P_k(\rho,L)=(-1)^{k+1}\frac{k!}{\rho^{k+1}}\,E_k(-L\rho).
+  $$
+- Falling-factorial (Horner in L)
+  $$
+  P_k(\rho,L)=-\frac{1}{\rho}\sum_{j=0}^k(-1)^j\frac{(k)^{\underline{j}}}{\rho^j}L^{k-j}.
+  $$
+- EGF in k
+  $$
+  \sum_{k\ge0}\frac{P_k(\rho,L)}{k!}\,t^k=-\frac{e^{Lt}}{\rho+t}.
+  $$
+- Linear recurrence (in k)
+  $$
+  \rho P_{k+1}(\rho,L)+(k+1)P_k(\rho,L)=-L^{k+1}.
+  $$
 
-Remarks / justification sketch:
-   •   This formula is exactly the polynomial you obtain when you expand the gamma–correction \mathcal{G}_k(s)=(-1)^k\Delta^{(k)}(s) around s=\rho and apply the Leibniz rule to the derivatives that arise in the residue → polynomial conversion (the same combinatorics that sends (s-\rho)^{-(m+1)} to (\log x)^m/m! also sends derivatives of \Delta to lower–degree L-monomials with the displayed binomial/factorial weights).
-   •   The right-hand side is a polynomial in L of degree \le k whose coefficients are explicit linear combinations of \Delta^{(j)}(\rho), j=1,\dots,k+1.
-   •   You can check it at small k by doing the residue algebra directly (apply Leibniz to \frac{1}{s}x^s and group terms).
+Pairing kernels (notation: ρ=β+iγ)
+- Conjugate pair (β=1/2) contribution
+  $$
+  x^\rho P_k(\rho,L)+x^{\bar\rho}P_k(\bar\rho,L)=2x^{1/2}\,\Re\!\big(e^{i\gamma L}P_k(\rho,L)\big).
+  $$
+- Reflection–conjugation quadruplet Q(ρ) EGF
+  $$
+  \sum_{\sigma\in Q(\rho)}x^\sigma\!\sum_{k\ge0}\frac{P_k(\sigma,L)}{k!}t^k
+  =-\sum_{\sigma\in Q(\rho)}\frac{e^{(\sigma+t)L}}{\sigma+t}.
+  $$
 
-With (★) accepted, we can write the first few H_k immediately.
+Masters — worked mini examples
+1) Show the top term is −L^k/ρ:
+- From the falling-factorial form, the j=0 term equals −(1/ρ)L^k.
 
-⸻
+2) Quick check (k=2):
+- Expand E_2(−Lρ)=1−Lρ+(Lρ)^2/2 and scale by (−1)^{3}2!/ρ^3 to get
+  $$
+  P_2=-\frac{L^2}{\rho}+\frac{2L}{\rho^2}-\frac{2}{\rho^3}.
+  $$
 
-B. Explicit H_k for k=0,1,2
+3) Verify the recurrence for k=0:
+- Check ρP_1+1·P_0=−L → P_1=−L/ρ−P_0/ρ=−L/ρ+1/ρ^2.
 
-Using (★):
+PhD — short derivations
+A) Derive the EGF:
+- Start from P_k truncated exponential form; sum over k, swap sums, recognize (ρ+t)^{-1}e^{Lt}.
 
-k=0
-\boxed{\,H_0(\rho)=\Delta’( \rho)\,}
-(single constant — degree 0).
+B) Prove the linear recurrence:
+- Multiply the EGF by (ρ+t) and equate coefficients.
 
-k=1
-\boxed{\,H_1(\rho,L)=\Delta’(\rho)\,L \;-\; \Delta’’(\rho)\,}
-(linear polynomial).
+C) Appell property:
+- Show ∂_L P_k = k P_{k-1} from any of the three forms above.
 
-k=2
-\boxed{\,H_2(\rho,L)=\Delta’(\rho)\,L^2 \;-\; \Delta’’(\rho)\,L \;+\; \tfrac{1}{2}\Delta^{(3)}(\rho)\,}
-(quadratic polynomial).
+Computational prompts (no code; pseudo-code ok)
+- Prompt 1 (Coefficients via truncated exponential)
+  Goal: given (ρ, L, k), compute P_k robustly.
+  Pseudocode:
+  ```
+  // input: rho, L, k
+  z = -L * rho
+  t = 1.0 / k!           // precompute descending 1/j! if needed
+  E = t
+  for m from k-1 down to 0:
+      t = t * z + 1/m!
+  Pk = (-1)^(k+1) * k! * E / rho^(k+1)
+  ```
 
-(One can of course reorder these as L^k–downwards or write the coefficients explicitly; the combinatorics is the simple (-1)^r/r! pattern shown in (★).)
+- Prompt 2 (Horner in L with falling factorials)
+  ```
+  // input: rho, L, k
+  a0 = -1/rho
+  p  = a0
+  factdown = 1            // (k)↓0
+  for j in 1..k:
+      factdown = factdown * (k - j + 1)
+      aj = -(-1)^j * factdown / rho^(j+1)
+      p  = p * L + aj
+  return p
+  ```
 
-⸻
+- Prompt 3 (Table for a list of zeros with conjugate pairing)
+  ```
+  // input: zeros R = [rho_1,...,rho_N], L, k
+  sum = 0
+  for r in R with Im(r) > 0:
+      Pk = P_k(r, L)         // from Prompt 1
+      term = 2 * x^(Re(r)) * Re( exp(i*Im(r)*L) * Pk )
+      sum += term
+  return x^(1/2) * sum        // if RH; else use quadruplet pairing
+  ```
 
-C. Specialization to the Riemann zeta gamma–factor
+- Prompt 4 (EGF-based moment sweep over k)
+  ```
+  // input: rho, L, Kmax
+  // Build all P_k from the recurrence
+  P0 = -1/rho
+  P = [P0]
+  for k in 0..Kmax-1:
+      Pnext = ( -L^(k+1) - (k+1)*P[k] ) / rho
+      append Pnext to P
+  return P
+  ```
 
-For the Riemann zeta completed function we take the usual archimedean factor
-\gamma(s)=\pi^{-s/2}\,\Gamma\!\big(\tfrac{s}{2}\big).
-Hence (recall \psi^{(n)} denotes the n-th polygamma)
-\Delta(s)=\log\gamma(s)-\log\gamma(1-s)
-=(\tfrac12-s)\log\pi+\log\Gamma(\tfrac{s}{2})-\log\Gamma(\tfrac{1-s}{2}).
-
-Its derivatives are compactly expressible in terms of polygamma values at s/2 and at \tfrac{1-s}{2}. Concretely:
-   •   First derivative
-\Delta’(s)
-=\tfrac12\psi\!\big(\tfrac{s}{2}\big)\;+\;\tfrac12\psi\!\big(\tfrac{1-s}{2}\big)\;-\;\log\pi.
-   •   Second derivative
-\Delta’’(s)
-=\tfrac{1}{4}\psi^{(1)}\!\big(\tfrac{s}{2}\big)\;-\;\tfrac{1}{4}\psi^{(1)}\!\big(\tfrac{1-s}{2}\big).
-   •   Third derivative
-\Delta^{(3)}(s)
-=\tfrac{1}{8}\psi^{(2)}\!\big(\tfrac{s}{2}\big)\;+\;\tfrac{1}{8}\psi^{(2)}\!\big(\tfrac{1-s}{2}\big).
-
-(Substitution and simplification were used; these identities are immediate from differentiating \log\Gamma(s/2) and \log\Gamma((1-s)/2) and using the chain rule.)
-
-Now substitute into the H_k above:
-
-Riemann zeta — H_0:
-\boxed{\;
-H_0(\rho)=\tfrac12\psi\!\big(\tfrac{\rho}{2}\big)+\tfrac12\psi\!\big(\tfrac{1-\rho}{2}\big)-\log\pi.
-\;}
-
-Riemann zeta — H_1:
-\boxed{\;
-H_1(\rho,L)=\Big(\tfrac12\psi\!\big(\tfrac{\rho}{2}\big)+\tfrac12\psi\!\big(\tfrac{1-\rho}{2}\big)-\log\pi\Big)L
-\;-\;\Big(\tfrac{1}{4}\psi^{(1)}\!\big(\tfrac{\rho}{2}\big)-\tfrac{1}{4}\psi^{(1)}\!\big(\tfrac{1-\rho}{2}\big)\Big).
-\;}
-
-Riemann zeta — H_2:
-\boxed{\;
-H_2(\rho,L)=\Big(\tfrac12\psi\!\big(\tfrac{\rho}{2}\big)+\tfrac12\psi\!\big(\tfrac{1-\rho}{2}\big)-\log\pi\Big)L^2
-\;-\;\Big(\tfrac{1}{4}\psi^{(1)}\!\big(\tfrac{\rho}{2}\big)-\tfrac{1}{4}\psi^{(1)}\!\big(\tfrac{1-\rho}{2}\big)\Big)L
-\;+\;\tfrac{1}{16}\Big(\psi^{(2)}\!\big(\tfrac{\rho}{2}\big)+\psi^{(2)}\!\big(\tfrac{1-\rho}{2}\big)\Big).
-\;}
-
-(You can rewrite factors like \tfrac{1}{16} as \tfrac{1}{2}\cdot \tfrac{1}{8} to trace them directly to the chain-rule half-factors from the s/2 argument; these expressions are already simplified to a convenient form for evaluation.)
-
-⸻
-
-D. How to use these in practice
-   •   When you form the quartet / paired contribution you compute the “core” polynomial P_k^{\text{core}}(\rho,L) coming from the pole data at \rho (this is what you get if you ignore gamma–factors), and then add the correction H_k(\rho,L) above to get the full P_k(1-\rho,L) that must be paired with x^{1-\rho} in the explicit formula. Concretely,
-P_k(1-\rho,L)=P_k^{\text{core}}(\rho,L)+H_k(\rho,L),
-with the H_k given above (same idea as in the general completed L-function case).
-   •   The polygamma values above are numerically stable to evaluate for moderate |\rho| using standard arbitrary-precision libraries (e.g. mpmath, scipy.special.polygamma), and they give the finite gamma-factor adjustments one must include for exact matching between the s and 1-s contributions.
-   •   For GRH zeros with \rho=\tfrac12+i\gamma, the two arguments become \rho/2=\tfrac14+i\gamma/2 and (1-\rho)/2=\tfrac14-i\gamma/2; many symmetry simplifications occur (real/imag pairing of polygamma values) which make the H_k numerically real as expected.
-
-⸻
-
-E. Final sanity checks / notes
-	1.	Degree & leading coefficient: H_k has degree \le k and does not alter the top-degree L^k coefficient coming from the pole multiplicity/singular part — it gives only the finite (and computable) correction terms that come from the gamma–factors and the functional equation. In our formula (★) the coefficient of L^k is \Delta’(\rho) (note this is the analytic correction at top-degree — when combined with the pole-derived core polynomial the total top coefficient becomes the expected symmetric value).
-	2.	Multiplicities: if \rho has multiplicity m>1 the same combinatorics holds; the core pole-contribution scales with m while the H_k part (coming from \Delta) is unchanged in form (only evaluated at that \rho).
-	3.	Implementation: if you want I can provide a short mpmath snippet that, given \rho and k, returns the polynomial coefficients of H_k(\rho,L) (and of the full P_k(1-\rho,L) if you also give the core b_m-data).
-
-⸻
-
-If you’d like, next I can:
-   •   produce the mpmath/Python code to evaluate these H_k (and show numerical examples for sample zeros), or
-   •   derive one more example: compute H_0,H_1,H_2 numerically for a specific zero (e.g. \rho\approx 1/2+14.1347\,i) to illustrate magnitudes and phases.
-
-Which would you prefer?
+Project ideas (Masters → PhD)
+- Masters: build a CSV table of coefficients of L^j in P_k up to k=8 for a fixed ρ; verify symmetry patterns numerically.
+- PhD: numerically verify the quadruplet EGF identity and extract S_k(L) = ∑_{σ∈Q(ρ)} x^σ P_k(σ,L) via t-derivatives at 0; compare with recurrence aggregation.

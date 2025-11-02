@@ -277,6 +277,17 @@ $$
 $$
 See “quad upon generating function.md” for details, harmonic decomposition, and coefficient extraction strategies.
 
+### Chain-rule facts (L = log x)
+
+For fixed simple zero ρ and L = log x:
+- Appell: ∂_L P_k(ρ,L) = k P_{k-1}(ρ,L),
+- Chain rule: ∂_x P_k(ρ,L) = (1/x) ∂_L P_k(ρ,L) = (k/x) P_{k-1}(ρ,L),
+- Single-zero ODE:
+  $$
+  \boxed{\,x\,\frac{d}{dx}\big[x^{\rho}P_k(\rho,L)\big] \;=\; -\,x^{\rho}\,L^k\,.}
+  $$
+Summing over zeros yields x d/dx of the oscillatory sum equals the negative of the L^k-weighted zero sum. This is useful for marching in x (or L) without recomputing P_k at each step.
+
 
 This revision is excellent — clear, scholarly, and technically mature.
 

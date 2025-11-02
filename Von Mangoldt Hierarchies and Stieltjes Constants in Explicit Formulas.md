@@ -74,6 +74,21 @@ $$
 
 ---
 
+## Trivial zeros (how they fit, student view)
+
+- The residue-polynomial recipe works for every simple zero ρ of ζ(s). That includes the trivial zeros at ρ=−2,−4,−6,…:
+  each contributes x^{\rho}P_k(\rho,\log x) with the same P_k as for nontrivial zeros.
+- Because Re(ρ)<0 here, x^{\rho}=x^{-2m} decays rapidly. These pieces are smooth and small and are commonly grouped as “trivial/boundary terms.”
+- For k=0 one can see this explicitly:
+  $$
+  \sum_{m\ge1} x^{-2m}P_0(-2m) \;=\; \sum_{m\ge1} \frac{x^{-2m}}{2m}
+  \;=\; -\tfrac12\,\log(1-x^{-2}),
+  $$
+  a benign correction term for x>1.
+- For k≥1, the same summation with P_k(−2m,\log x) yields finite combinations of familiar special functions in x^{-2} (derivatives of log and polylogarithms), again decaying quickly. The nontrivial zeros (with Re ρ≈1/2) are the source of the oscillatory part.
+
+---
+
 ## 4. Computational plan (students' project)
 
 Goal: verify the main-term expansion and observe oscillations coming from low-lying zeros.
