@@ -159,6 +159,9 @@ In particular (answer to the question):
 
 Let L := log x and fix a simple zero ρ. The family {P_k(ρ,L)}_k is an Appell sequence in the variable L.
 
+Notation/convention
+- Here L always denotes log x (not an L-function). In the EGF below, e^{Lt} = x^{t}.
+
 Key facts
 - Exponential generating function (EGF) in k:
   $$
@@ -206,6 +209,73 @@ Practical consequences
 
 Remark
 - The Appell structure explains why differentiation in L lowers the index and why all the binomial/Horner patterns appear; it’s the umbral backbone of the identities already listed.
+
+### Relation to Bernoulli and Euler polynomials (Appell connection)
+
+All three families are Appell sequences in L, determined by an EGF of the form g(t) e^{Lt}:
+- Bernoulli B_k(L): g_B(t) = t/(e^t − 1)
+- Euler E_k(L): g_E(t) = 2/(e^t + 1)
+- Zero–residue P_k(ρ,L): g_P(t) = −1/(ρ + t)
+
+They are not the same Appell family (g_P is rational in t, not a function of e^t), but Appell theory gives lower‑triangular connection formulas via EGF ratios. If A_k is an Appell sequence with g_A and C_k with g_C, then
+$$
+A_n(L) \;=\; \sum_{j=0}^n \binom{n}{j}\,c_{n-j}\,C_j(L),
+\quad\text{where}\quad
+\sum_{m\ge 0} c_m \frac{t^m}{m!} \;=\; \frac{g_A(t)}{g_C(t)}.
+$$
+
+Applying this to P_k(ρ,L):
+
+- Against Bernoulli:
+  $$
+  \frac{g_P(t)}{g_B(t)} \;=\; -\,\frac{e^t-1}{t(\rho+t)}
+  \;=\; -\sum_{m\ge0}\sum_{n\ge0}\frac{(-1)^m}{\rho^{\,m+1}}\frac{t^{\,m+n}}{(n+1)!},
+  $$
+  hence
+  $$
+  c^{(B)}_k \;=\; -\sum_{m=0}^{k}\frac{(-1)^m}{\rho^{\,m+1}}\frac{k!}{(k-m+1)!},
+  \qquad
+  P_n(\rho,L)\;=\;\sum_{j=0}^n \binom{n}{j}\,c^{(B)}_{\,n-j}\,B_j(L).
+  $$
+
+- Against Euler:
+  $$
+  \frac{g_P(t)}{g_E(t)} \;=\; -\,\frac{e^t+1}{2(\rho+t)}
+  \;=\; -\frac12\sum_{m\ge0}\frac{(-1)^m}{\rho^{\,m+1}}\,t^{\,m}\;\cdot\;\sum_{r\ge0}\frac{t^{\,r}}{r!}(1+(-1)^r),
+  $$
+  which yields explicit
+  $$
+  c^{(E)}_k \;=\; -\frac12\sum_{m=0}^{k}\frac{(-1)^m}{\rho^{\,m+1}}\,(1+(-1)^{k-m})\,\frac{k!}{(k-m)!},
+  \qquad
+  P_n(\rho,L)\;=\;\sum_{j=0}^n \binom{n}{j}\,c^{(E)}_{\,n-j}\,E_j(L).
+  $$
+
+Remarks
+- All Appell families admit the “initial‑values” form
+  $$
+  A_n(L)=\sum_{m=0}^n \binom{n}{m} A_m(0)\,L^{\,n-m}.
+  $$
+  For P_k one has $P_m(\rho,0)= -(-1)^m m!/\rho^{\,m+1}$, which recovers the falling‑factorial/Horner form given earlier.
+- Takeaway: P_k behaves like Bernoulli/Euler polynomials in being Appell, but with a different kernel g(t); they are linearly (lower‑triangularly) related via the explicit coefficients above.
+
+
+## EGF and quadruplet pairing (pointer)
+
+The exponential generating function (in k) for a fixed zero ρ is
+$$
+\sum_{k\ge0}\frac{P_k(\rho,L)}{k!}\,t^k \;=\; -\,\frac{e^{Lt}}{\rho+t}.
+$$
+Summing over the reflection–conjugation quadruplet $Q(\rho)=\{\rho,1-\rho,\bar\rho,1-\bar\rho\}$ yields
+$$
+\sum_{\sigma\in Q(\rho)} x^{\sigma}\sum_{k\ge0}\frac{P_k(\sigma,L)}{k!}\,t^k
+\;=\; -\sum_{\sigma\in Q(\rho)}\frac{e^{(\sigma+t)L}}{\sigma+t},
+$$
+a real-valued kernel for real L,t. Under RH this simplifies to
+$$
+-\,4\,e^{(\tfrac12+t)L}\,\Re\!\Big(\frac{e^{i\gamma L}}{\rho+t}\Big),
+\qquad \rho=\tfrac12+i\gamma.
+$$
+See “quad upon generating function.md” for details, harmonic decomposition, and coefficient extraction strategies.
 
 
 This revision is excellent — clear, scholarly, and technically mature.
