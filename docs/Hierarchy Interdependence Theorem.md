@@ -91,42 +91,37 @@ Exercises (Masters → PhD)
 ## 📜 Hierarchy Interdependence Theorem — ∂_L and ∂_x forms
 
 Setup
-- L := log x; O_k(ρ,x) := x^ρ P_k(ρ,L).
-- Appell: ∂_L P_k = k P_{k-1}. Recurrence: ρ P_k + k P_{k-1} = − L^k.
+- L := log x; O_k(ρ,x) := x^{\rho} P_k(ρ,L).
+- Appell: ∂_L P_k = k P_{k-1}; recurrence: ρ P_k + k P_{k-1} = −L^k.
 
-Theorem (∂_L operator on zero terms)
+Theorem (∂_L operator on the zero term)
 $$
-\frac{\partial}{\partial L}\big[x^{\rho} P_k(\rho,L)\big]
-= x^{\rho}\,\big(\rho P_k(\rho,L) + k P_{k-1}(\rho,L)\big)
+\frac{\partial}{\partial L}\big[x^{\rho}P_k(\rho,L)\big]
+= x^{\rho}\,\big(\rho P_k(\rho,L)+k P_{k-1}(\rho,L)\big)
 = -\,x^{\rho}\,L^k.
 $$
 
-Chain rule in x (since dL/dx = 1/x)
-- ∂_x P_k = (1/x) ∂_L P_k = (k/x) P_{k-1}.
-- ODE for a single zero term:
+Chain rule in x (dL/dx = 1/x)
+- ∂_x P_k = (1/x)∂_L P_k = (k/x) P_{k-1}.
+- Single‑zero ODE:
   $$
-  \boxed{\,x\,\frac{d}{dx}\big[x^{\rho}P_k(\rho,L)\big] \;=\; -\,x^{\rho}\,L^k\,.}
+  x\,\frac{d}{dx}\big[x^{\rho}P_k(\rho,L)\big] \;=\; -\,x^{\rho}\,L^k.
   $$
 
-Consequences (zero-sum)
-- For S_k(x) := ∑_ρ x^ρ P_k(ρ,L):  x dS_k/dx = − ∑_ρ x^ρ L^k.
-- Under conjugate pairing or quadruplets, the RHS is real and expressed by x^{1/2} times trigonometric polynomials in L.
+Zero‑sum consequence
+- For S_k(x):=∑_ρ x^{\rho}P_k(ρ,L), one has x dS_k/dx = −∑_ρ x^{\rho} L^k (pair in conjugates/quadruplets to keep it real).
 
-Examples
-- k=1: from P_1 = −L/ρ + 1/ρ^2 and P_0 = −1/ρ, we get ρP_1 + P_0 = −L.
-- k=2: differentiate x^ρ P_2(ρ,L) in L, simplify via the recurrence to −x^ρ L^2.
-
-Implementation prompts (no code)
+Prompts (no code)
 - March in L:
   ```
-  // ODE: d/dL [ x^rho P_k ] = - x^rho L^k
-  T_next = T - h * x^rho * L^k   // step L -> L+h
+  // d/dL [x^rho P_k] = - x^rho L^k
+  T_next = T - h * x^rho * L^k
   ```
-- Build P_k from P_{k-1} across zeros:
+- Build P_k from P_{k-1}:
   ```
   Pk = ( -L^k - k*P_{k-1} ) / rho
   ```
-- Quadruplet sweep:
+- Quadruplet extraction:
   ```
   S_k(L) = d^k/dt^k [ - sum_{σ∈Q(ρ)} e^{(σ+t)L}/(σ+t) ] at t=0
   ```

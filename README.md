@@ -16,11 +16,11 @@ Notation and key identities
 - Single-zero ODE: x d/dx [x^ρ P_k] = − x^ρ L^k.
 
 Pairing and reflection (oscillatory sums)
-- Conjugate pairing (RH implications): x^ρ P_k + x^{ρ̄} P_k(ρ̄, L) = 2 x^{1/2} Re(e^{iγL} P_k(ρ,L)).
 - Quadruplet (always real): sum over {ρ, 1−ρ, ρ̄, 1−ρ̄} gives 2 x^{1/2}[A_k(L) cos(γL) + B_k(L) sin(γL)].
-- The polynomial P_k is universal for simple zeros; reflection reorganizes sums and adds smooth Γ/ψ pieces to main terms.
+- Conjugate pairing is a simplification if RH holds (not assumed by default).
 
 Start here (core docs)
+- See docs/README.md for the index, notation, and quick references.
 - docs/zero-residual-polys.md — definitions, closed forms, EGF, recurrence, Bernoulli/Euler Appell connections.
 - docs/Leibniz Rule.md — residue derivation of P_k via Leibniz, functional-equation symmetry, reflection pairing.
 - docs/Compact formula.md — compact formulas + Masters/PhD exercises and computational prompts.

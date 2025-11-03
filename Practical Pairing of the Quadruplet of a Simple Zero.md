@@ -53,3 +53,26 @@ Why this pairing is “practical”
 
 Note
 - Nothing here assumes or mentions the Riemann Hypothesis. The quadruplet pairing uses only the functional-equation symmetry and complex conjugation, which hold in the standard L-function framework (and specifically for ζ(s)).
+
+# Practical pairing: the (ρ, 1−ρ) pair
+
+Notation
+- L := log x (not an L-function). In any EGF with parameter t, e^{Lt} = x^{t}.
+- Let ρ = β + iγ be a simple zero. P_k(σ,L) is degree ≤ k in L.
+
+Identity (general, no RH)
+$$
+x^{\rho} P_k(\rho,L) \;+\; x^{1-\rho} P_k(1-\rho,L)
+\;=\; 2\,x^{1/2}\Big[ C^+_{k,\rho}(L)\,\cos(\gamma L)\;+\;C^-_{k,\rho}(L)\,\sin(\gamma L)\Big],
+$$
+with amplitudes
+$$
+C^{\pm}_{k,\rho}(L)
+=\tfrac12\Big(x^{\beta-\tfrac12} P_k(\rho,L)\;\pm\;x^{-\beta+\tfrac12} P_k(1-\rho,L)\Big).
+
+One‑line derivation
+- Write the pair as x^{1/2}(A e^{iγL}+B e^{-iγL}) with A=x^{\beta-1/2}P_k(ρ,L), B=x^{-(\beta-1/2)}P_k(1−ρ,L), then expand into cos/sin.
+
+Usage
+- For real sums without any hypothesis, add the conjugate pair {ρ̄,1−ρ̄} (quadruplet) to make the total manifestly real.
+- “Implications if RH holds”: β=1/2 so C^+=Re P_k(ρ,L), C^−=Im P_k(ρ,L) and the conjugate pair {ρ,ρ̄} already suffices.

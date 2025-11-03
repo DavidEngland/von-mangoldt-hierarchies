@@ -1,30 +1,46 @@
-# Compact formulas for P_k(ρ, L) — cheat sheet + problems
+# Compact formulas for P_k(ρ,L) — cheat sheet + prompts
 
 Notation
 - L := log x; u := 1/ρ; E_k(z) := ∑_{j=0}^k z^j/j!.
+- No RH is assumed by default; RH consequences are noted explicitly when relevant.
 
 Core identities (simple zero ρ)
-- Truncated exponential:  P_k = (−1)^{k+1} k!/ρ^{k+1} · E_k(−Lρ).
-- Falling-factorial (Horner in L):  P_k = −(1/ρ) ∑_{j=0}^k (−1)^j (k)↓j · L^{k−j}/ρ^{j}.
-- EGF in k:  ∑_{k≥0} P_k t^k/k! = − e^{Lt}/(ρ + t).
-- Linear recurrence:  ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
-- Appell: ∂_L P_k = k P_{k−1}; chain rule: ∂_x P_k = (k/x) P_{k−1}.
+- Truncated exponential:
+  $$
+  P_k(\rho,L)=(-1)^{k+1}\frac{k!}{\rho^{k+1}}\,E_k(-L\rho).
+  $$
+- Falling‑factorial (Horner in L):
+  $$
+  P_k(\rho,L)=-\frac{1}{\rho}\sum_{j=0}^k(-1)^j\frac{(k)^{\underline{j}}}{\rho^j}L^{k-j}.
+  $$
+- EGF (in k):
+  $$
+  \sum_{k\ge0}\frac{P_k(\rho,L)}{k!}t^k=-\frac{e^{Lt}}{\rho+t},\quad e^{Lt}=x^t.
+  $$
+- Linear recurrence:
+  $$
+  \rho P_{k+1} + (k+1)P_k = -L^{k+1}.
+  $$
 
-Pairing kernels (ρ = β + iγ)
-- Conjugate pair (RH implications): x^ρ P_k + x^{ρ̄} P_k(ρ̄,L) = 2 x^{1/2} Re(e^{iγL} P_k(ρ,L)).
-- Quadruplet kernel (EGF): ∑_{σ∈Q(ρ)} x^σ ∑ P_k(σ,L) t^k/k! = −∑_{σ∈Q} e^{(σ+t)L}/(σ+t).
+Pairing (ρ=β+iγ)
+- Practical (ρ,1−ρ):
+  $$
+  x^{\rho}P_k(\rho,L)+x^{1-\rho}P_k(1-\rho,L)
+  = 2x^{1/2}\Big[C^+_{k,\rho}\cos(\gamma L)+C^-_{k,\rho}\sin(\gamma L)\Big],
+  $$
+  with $C^{\pm}_{k,\rho}$ from the Practical Pairing note.
 
-Masters — worked minis
-- Show the top term is −L^k/ρ from the falling-factorial form (j=0 term).
-- k=2 via E_2(−Lρ): P_2 = −L^2/ρ + 2L/ρ^2 − 2/ρ^3.
-- Verify ρP_1 + P_0 = −L.
+Masters — quick checks
+- Top term: from falling‑factorial, j=0 gives −L^k/ρ.
+- k=2 via E_2: P_2= −L^2/ρ + 2L/ρ^2 − 2/ρ^3.
+- Verify ρP_1+P_0=−L.
 
 PhD — short derivations
-- Derive the EGF and the recurrence from (ρ+t)∑ P_k t^k/k! + e^{Lt} = 0.
-- Prove Appell: ∂_L P_k = k P_{k−1}.
-- Write the quadruplet EGF and extract S_k(L) by k-th derivative at t=0.
+- Derive EGF from truncated exponential form.
+- Prove the recurrence from (ρ+t)∑ P_k t^k/k! + e^{Lt}=0.
+- Extract S_k(L) by differentiating the quadruplet kernel at t=0.
 
-Computational prompts (pseudo-code only)
+Computational prompts (pseudo‑code)
 - Horner via truncated exponential:
   ```
   z = -L*rho
@@ -41,5 +57,5 @@ Computational prompts (pseudo-code only)
   ```
 - Paired zero sum (RH implications):
   ```
-  S = sum_{Im(rho)>0} 2*x^(1/2) * Re( exp(i*gamma*L) * P_k(rho,L) )
+  S = sum_{Im(rho)>0} 2*x^(1/2)*Re( exp(i*gamma*L) * P_k(rho,L) )
   ```

@@ -128,18 +128,18 @@ Contributors will be:
 # Contributing (short)
 
 Style and math
-- Keep derivations precise; cite sources for nonstandard claims
-- Inline math: $...$; display: $$ ... $$; close all fences
-- Notation: L := log x (not an L-function). In EGFs, e^{Lt} = x^{t}
-- Prefer filenames without spaces or ‘#’; use lower_snake_case where possible
+- Keep derivations precise; cite nonstandard claims.
+- Inline math: $...$; display: $$ ... $$. Close all fences.
+- Notation: L := log x (not an L-function). In EGFs, e^{Lt} = x^{t}.
+- Prefer filenames without spaces or ‘#’; lower_snake_case where possible.
 
 Core identities to reuse
-- EGF: ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t)
-- Recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}
-- Appell: ∂_L P_k = k P_{k-1}; ∂_x P_k = (k/x) P_{k-1}
+- EGF: ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t).
+- Recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
+- Appell: ∂_L P_k = k P_{k-1}; chain rule: ∂_x P_k = (k/x) P_{k-1}.
 
 PR checklist
-- Math renders in GitHub and VS Code (Markdown Preview Enhanced)
-- Pair conjugate zeros (or use quadruplets) in any numeric examples
-- If adding docs, update docs/README.md index
-- If adding tools, include minimal usage notes and defaults
+- Math renders in GitHub and VS Code (Markdown Preview Enhanced).
+- Pair conjugate zeros (or use quadruplets) in numeric examples.
+- Update docs/README.md index when adding docs.
+- If adding tools, include minimal usage notes and defaults.

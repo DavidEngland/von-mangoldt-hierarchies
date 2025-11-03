@@ -288,6 +288,19 @@ For fixed simple zero ρ and L = log x:
   $$
 Summing over zeros yields x d/dx of the oscillatory sum equals the negative of the L^k-weighted zero sum. This is useful for marching in x (or L) without recomputing P_k at each step.
 
+## Practical pairing (ρ, 1−ρ), no RH
+
+Let ρ = β + iγ and L := log x. For any k,
+$$
+x^{\rho} P_k(\rho,L) \;+\; x^{1-\rho} P_k(1-\rho,L)
+\;=\; 2\,x^{1/2}\Big[ C^+_{k,\rho}(L)\,\cos(\gamma L)\;+\;C^-_{k,\rho}(L)\,\sin(\gamma L)\Big],
+$$
+with amplitudes
+$$
+C^{\pm}_{k,\rho}(L)
+\;=\;\tfrac12\left( x^{\beta-\tfrac12} P_k(\rho,L)\;\pm\; x^{-\beta+\tfrac12} P_k(1-\rho,L)\right).
+$$
+This is obtained by writing the pair as x^{1/2}(A e^{iγL}+B e^{-iγL}) with A=x^{\beta-1/2}P_k(ρ,L), B=x^{-(\beta-1/2)}P_k(1−ρ,L), and expanding into cos/sin. For real-valued sums without assuming RH, use the full quadruplet {ρ, 1−ρ, ρ̄, 1−ρ̄}.
 
 This revision is excellent — clear, scholarly, and technically mature.
 
