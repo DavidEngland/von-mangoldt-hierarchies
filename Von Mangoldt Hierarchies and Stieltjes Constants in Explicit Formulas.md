@@ -20,6 +20,11 @@ $$
 $$
 Differentiating with respect to $s$ produces higher-weighted Dirichlet series. We define these derivatives as the von Mangoldt hierarchies and relate their partial sums to Stieltjes constants, which appear naturally from the Laurent expansion of $\zeta(s)$ at $s=1$.
 
+### Canonical notation (quick reference)
+- Completed zeta (analytic factor): Λ^*(s):=π^{-s/2}Γ(s/2)ζ(s) (distinct from the arithmetic Λ(n)).
+- Digamma: ψ(s)=Γ′(s)/Γ(s).
+- Chebyshev (prime sum): Ψ(x)=∑_{n≤x}Λ(n) (uppercase Psi; do not confuse with digamma ψ).
+
 ---
 
 ## 2. Definitions and basic identities
@@ -28,6 +33,16 @@ Differentiating with respect to $s$ produces higher-weighted Dirichlet series. W
 $$
 (-1)^k\frac{d^k}{ds^k}\!\left(-\frac{\zeta'(s)}{\zeta(s)}\right)=\sum_{n\ge1}\frac{\Lambda_k(n)}{n^s},\qquad \Re(s)>1.
 $$
+
+> Intuition (why (log n)^k appears): For $\Re(s)>1$, termwise differentiation gives
+> $$
+> \frac{d^k}{ds^k}\,n^{-s}=(-\log n)^k n^{-s},
+> $$
+> so each derivative of $-\zeta'/\zeta=\sum \Lambda(n)n^{-s}$ inserts $(\log n)^k$ on coefficients. Thus
+> $
+> \Lambda_k(n)=\Lambda(n)\,(\log n)^k,
+> $
+> supported on prime powers, with the explicit prime-power formula below.
 
 - Explicitly, for prime powers $p^r$,
 $$
@@ -71,6 +86,16 @@ $$
 $$
 
 *Proof sketch.* Differentiate the Dirichlet series under the integral, move the contour left, and compute residues at $s=1$ (giving the polynomial in $\log x$ with $\gamma_m$) and at nontrivial zeros (giving the oscillatory $x^\rho$ terms).
+
+---
+
+Bridging analytic to computation (how residues become numbers)
+- Each simple zero ρ contributes the explicitly computable term $x^{\rho}P_k(\rho,\log x)$ with $P_k$ from (★).
+- Numerically:
+  1) evaluate $P_k(\rho,\log x)$ via the closed form or recurrence,
+  2) sum over a truncated set of zeros,
+  3) pair conjugates (or use the reflection–conjugation quadruplet) to obtain real, stable contributions.
+- The final approximation is $M_k(x)+\sum_{|\Im\rho|\le T} x^{\rho}P_k(\rho,\log x)$ with T chosen for the desired accuracy.
 
 ---
 
@@ -234,43 +259,34 @@ Careful tracking of the overall $(-1)^k$ factor in the definition of $\Lambda_k$
 
 ---
 
-## Appendix A — quick formula summary (canonical notation)
+## Generalized Stieltjes constants for general L
 
-- Completed zeta (analytic factor): denote $\Lambda^*(s):=\pi^{-s/2}\Gamma(s/2)\zeta(s)$ (avoid clash with von Mangoldt $\Lambda(n)$).
-- Digamma: $\psi(s)=\Gamma'(s)/\Gamma(s)$.
-- Chebyshev (prime sum): use $\Psi(x)=\sum_{n\le x}\Lambda(n)$ to avoid symbol clash with digamma.
+### Notation reminder
+- To avoid clashes with “L-functions,” let λ(x) := log x. In existing formulas L ≡ λ.
 
----
+### General L-functions: poles, “Stieltjes-like” constants, and main terms
 
-## Explicit polynomials $P_k(\rho,\log x)$ — corrected table and general formula
+- ζ-case (simple pole at s=1): the main term
+  $$
+  M_k(x)=x\,\lambda^k-\sum_{m=0}^k\binom{k}{m}\gamma_m\,x\,\lambda^{k-m}
+  $$
+  uses the classical Stieltjes constants γ_m from ζ(1+u)=1/u+∑(-1)^mγ_m u^m/m!.
+  In particular, γ_0 and γ_1 appear explicitly for k≥0.
 
-Recall from the residue computation (Section 3, Peer‑review notes) the general closed form for a simple zero $\rho$:
-$$
-P_k(\rho,\log x)
-= \sum_{j=0}^k (-1)^{\,j+1}\frac{k!}{(k-j)!}\,\frac{(\log x)^{\,k-j}}{\rho^{\,j+1}}.
-\tag{★}
-$$
+- General L(s):
+  - If L has a simple pole at s=1 (e.g., ζ, principal Dirichlet L), write the local expansion
+    $$
+    -\frac{L'}{L}(1+u)\;=\;\frac{1}{u}\;+\;\sum_{m\ge0} c_m(L)\,u^m,
+    $$
+    and the same contour argument yields
+    $$
+    M_{k,L}(x)=x\,\lambda^k-\sum_{m=0}^k \binom{k}{m}\,c_m(L)\,x\,\lambda^{k-m}.
+    $$
+    The coefficients c_m(L) are the L-analogue of Stieltjes coefficients; if you prefer to absorb Γ-factors, replace L by its completed form and re-express c_m(L) accordingly.
+  - If L is entire at s=1 (e.g., primitive non-principal Dirichlet L, cusp forms), there is no 1/u term; the x·poly(λ) main term from s=1 vanishes. What remains are archimedean “background” terms (from Γ-factors if you work with a completed L) and the oscillatory zero sum. In this case, “γ_0” and “γ_1” in ζ’s sense simply do not occur.
 
-Below is a ready‑to‑use table of $P_k$ for small $k$ (useful for exercises and numeric checks). These follow from (★) and assume $\rho$ is a simple zero.
+- Zero terms (unchanged): For any simple zero ρ of L, the oscillatory contribution is x^ρ P_k(ρ, λ) with the same universal P_k as in the ζ-case. Only the set of zeros differs with L.
 
-| k | $P_k(\rho,\log x)$ |
-|---:|:---|
-| 0 | $-\dfrac{1}{\rho}$ |
-| 1 | $-\dfrac{\log x}{\rho}+\dfrac{1}{\rho^2}$ |
-| 2 | $-\dfrac{(\log x)^2}{\rho}+\dfrac{2\log x}{\rho^2}-\dfrac{2}{\rho^3}$ |
-| 3 | $-\dfrac{(\log x)^3}{\rho}+\dfrac{3(\log x)^2}{\rho^2}-\dfrac{6\log x}{\rho^3}+\dfrac{6}{\rho^4}$ |
-| 4 | $-\dfrac{(\log x)^4}{\rho}+\dfrac{4(\log x)^3}{\rho^2}-\dfrac{12(\log x)^2}{\rho^3}+\dfrac{24\log x}{\rho^4}-\dfrac{24}{\rho^5}$ |
-| 5 | $-\dfrac{(\log x)^5}{\rho}+\dfrac{5(\log x)^4}{\rho^2}-\dfrac{20(\log x)^3}{\rho^3}+\dfrac{60(\log x)^2}{\rho^4}-\dfrac{120\log x}{\rho^5}+\dfrac{120}{\rho^6}$ |
-
-Notes and usage
-- Each residue contribution for a simple zero is $x^\rho P_k(\rho,\log x)$. Sum conjugate pairs to obtain real corrections when $x$ is real.
-- For multiple zeros of multiplicity $m>1$, higher‑order residues are required; the polynomial degree in $\log x$ increases accordingly (exercise for the student).
-- The general formula (★) gives the coefficient of $(\log x)^{k-j}$ as $(-1)^{j+1} k!/(k-j)! \cdot \rho^{-(j+1)}$; implement directly in code to avoid algebra mistakes.
-
-Numeric/implementation tip
-- Compute $P_k$ symbolically once (or generate coefficients programmatically via factorials) and reuse for each $\rho$.
-- When summing $x^\rho P_k(\rho,\log x)$ numerically, sum conjugate pairs $x^\rho P_k+\overline{x^\rho P_k}$ to reduce cancellation error and keep results real.
-
----
-
-*Instructor note:* this file is now Markdown + KaTeX friendly. For lecture slides and notebooks, extract Sections 3 and 4 as exercises.
+Remarks on γ_0, γ_1
+- For ζ: γ_0=γ (Euler–Mascheroni) controls the x term in M_0; γ_1 enters at order λ^{k-1} in M_k via the binomial combination.
+- For general L with a pole at 1: replace γ_m by c_m(L) from −L′/L(1+u). If there is no pole, there is no x-term at k=0 and no c_m(L) polynomial at higher k from s=1.

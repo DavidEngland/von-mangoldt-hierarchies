@@ -351,3 +351,64 @@ For k>=1, express T_k via polylog Li_s(x^{-2}) + polynomials in log x
 Assessment guide
 - Masters submissions: algebraic checks, short derivations, and numeric verification with concise plots.
 - PhD submissions: full derivations, numerically stable implementations (paired sums, precision control), and careful error tracking in EGF validations.
+
+## Power sums of zeros and closed formulas for Stieltjes constants
+
+Set u := s−1 and write the completed ξ-function Hadamard product
+- ξ’/ξ(1+u) = Σρ 1/(1+u − ρ)  (up to an additive constant, harmless for u^m, m≥1),
+and relate −ζ’/ζ to ξ via
+-ζ’/ζ(1+u) = 1/u + 1/(1+u) − ξ’/ξ(1+u) + ½ ψ((1+u)/2) − ½ log π.
+
+Define the zero power sums about s=1 (symmetric summation over nontrivial zeros ρ):
+S_k := Σρ (1 − ρ)^{−k},  k≥1.
+Then expanding at u=0 and matching coefficients in
+-ζ’/ζ(1+u) = 1/u + Σm≥0 η_m u^m, with η_m = (−1)^m γ_{m+1}/m!,
+one obtains, for k≥2,
+- boxed identity
+  γ_k = (k−1)! [ 1 − (1 − 2^{−k}) ζ(k) − S_k ],   (k≥2).
+- in terms of polygamma at 1/2:
+  S_k = 1 − (1 − 2^{−k}) ζ(k) − γ_k/(k−1)!.
+
+Notes
+- ψ^{(n)}(1/2) = (−1)^{n+1} n! (2^{n+1} − 1) ζ(n+1) was used to rewrite the Γ/ψ contribution.
+- The sum S_k is taken in the symmetric (pairwise) sense; numerically, always sum conjugate pairs.
+
+Examples
+- k=2:
+  γ_2 = 1 − (3/4) ζ(2) − Σρ (1 − ρ)^{−2}.
+- k=3:
+  γ_3 = 2! [ 1 − (1 − 1/8) ζ(3) − Σρ (1 − ρ)^{−3} ].
+
+Generating function and derivatives (ξ-kernel)
+- Let F(u) := −ξ’/ξ(1+u). Then for k≥1,
+  S_k = (−1)^{k−1}/(k−1)! · d^{k−1}/du^{k−1} F(u) |_{u=0}.
+- Equivalently,
+  Σ_{k≥1} S_k u^{k−1} = Σρ 1/(1+u − ρ)
+  (constant term irrelevant for k≥2).
+
+Derivation sketch
+- Expand 1/(1+u−ρ) at u=0 to get power sums in (ρ−1)^{−m−1}.
+- Use −ζ’/ζ(1+u) identity above to match u^m coefficients (m≥1).
+- Convert η_m to γ_{m+1} via η_m = (−1)^m γ_{m+1}/m!.
+- Rewrite the ψ contribution using ψ^{(m)}(1/2) identity.
+
+Computational prompts (no code; pair sums)
+- Prompt A (S_k from zeros)
+  ```
+  // input: zeros {rho with Im>0}, integer k>=2
+  // compute S_k = sum over full quadruplet or conjugate pairs
+  S_k = 2 * sum_{Im(rho)>0} Re( (1 - rho)^{-k} )
+  ```
+- Prompt B (γ_k from S_k)
+  ```
+  // input: k>=2, S_k, zeta(k)
+  gamma_k = (k-1)! * ( 1 - (1 - 2^{-k}) * zeta(k) - S_k )
+  ```
+- Prompt C (consistency check via ξ-kernel)
+  ```
+  // numerically differentiate F(u) = -xi'(1+u)/xi(1+u) at u=0
+  // compare (−1)^{k−1}/(k−1)! * F^{(k-1)}(0) with S_k
+  ```
+
+Caveat (k=1)
+- The k=1 case (γ_1) carries an extra constant from the ξ’/ξ(1+u) additive term; the clean closed form above applies for k≥2. In practice, prefer k≥2 for zero–power-sum reconstructions of γ_k.

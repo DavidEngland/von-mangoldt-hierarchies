@@ -1,8 +1,18 @@
-# Compact formulas for P_k(ρ,L) — cheat sheet + prompts
+# Compact formulas for P_k(ρ, λ) — cheat sheet + problems
 
 Notation
-- L := log x; u := 1/ρ; E_k(z) := ∑_{j=0}^k z^j/j!.
-- No RH is assumed by default; RH consequences are noted explicitly when relevant.
+- λ(x) := log x (preferred; older notes use L ≡ λ). E_k(z) := ∑_{j=0}^k z^j/j!.
+
+Universal zero polynomials (simple zero ρ, any L-function)
+- Truncated exponential:  P_k = (−1)^{k+1} k!/ρ^{k+1} · E_k(−λρ).
+- Falling-factorial:      P_k = −(1/ρ) ∑_{j=0}^k (−1)^j (k)↓j · λ^{k−j}/ρ^{j}.
+- EGF in k:               ∑_{k≥0} P_k t^k/k! = − e^{λ t}/(ρ + t).
+- Recurrence:             ρ P_{k+1} + (k+1) P_k = − λ^{k+1}.
+- Appell lowering:        ∂_λ P_k = k P_{k−1}.
+
+Main terms (ζ vs. general L)
+- ζ: M_k(x)=x λ^k − ∑_{m≤k} binom(k,m) γ_m x λ^{k−m}.
+- General L with a simple pole at 1: replace γ_m by c_m(L) from −L′/L(1+u)=1/u+∑ c_m(L) u^m; if L is entire at 1, the x·poly(λ) main term vanishes.
 
 Core identities (simple zero ρ)
 - Truncated exponential:
@@ -59,3 +69,21 @@ Computational prompts (pseudo‑code)
   ```
   S = sum_{Im(rho)>0} 2*x^(1/2)*Re( exp(i*gamma*L) * P_k(rho,L) )
   ```
+
+## Main term and Stieltjes constants γ_m (what are they?)
+
+- In the explicit formula for Ψ_k(x), the main term is
+  $$
+  M_k(x)\;=\;x\,L^k\;-\;\sum_{m=0}^{k}\binom{k}{m}\,\gamma_m\,x\,L^{\,k-m},
+  \qquad L=\log x.
+  $$
+- Here γ_m are the Stieltjes constants, defined by the Laurent expansion of ζ(s) at s=1:
+  $$
+  \zeta(1+u)\;=\;\frac{1}{u}\;+\;\sum_{m\ge 0}\frac{(-1)^m\,\gamma_m}{m!}\,u^m,
+  \qquad \gamma_0=\gamma\ \text{(Euler–Mascheroni)}.
+  $$
+  Equivalently,
+  $$
+  \gamma_m\;=\;\lim_{N\to\infty}\left(\sum_{n=1}^N\frac{(\log n)^m}{n}\;-\;\frac{(\log N)^{m+1}}{m+1}\right).
+  $$
+- They encode the smooth (pole-at-1) part of ζ and enter M_k(x) via the binomial combination above.

@@ -125,3 +125,15 @@ Prompts (no code)
   ```
   S_k(L) = d^k/dt^k [ - sum_{σ∈Q(ρ)} e^{(σ+t)L}/(σ+t) ] at t=0
   ```
+
+## Why Appell lowering underpins interdependence
+
+- Appell property (lowering): ∂_λ P_k(ρ,λ) = k P_{k-1}(ρ,λ) with λ := log x.
+- Together with the k-recursion ρ P_k + k P_{k-1} = −λ^k, it yields
+  ∂_λ[x^ρ P_k] = x^ρ(ρ P_k + k P_{k-1}) = −x^ρ λ^k
+  and, via dλ/dx = 1/x, the x-ODE x d/dx[x^ρ P_k] = −x^ρ λ^k.
+
+Necessity (informal): If for all ρ and λ the identity ∂_λ[x^ρ P_k] = −x^ρ λ^k holds with P_k polynomial in λ of degree ≤ k and P_0 constant in λ, then comparing λ-degrees forces ∂_λ P_k = k P_{k-1} and a linear relation ρ P_k + k P_{k-1} = −λ^k. Thus the Appell lowering is the backbone of (and essentially equivalent to) the interdependence identities used throughout.
+
+Notation
+- We prefer λ := log x to avoid collision with “L-function.” In older notes L ≡ λ.

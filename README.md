@@ -8,8 +8,8 @@ What this repo contains
 - A standalone HTML tool to generate tables of P_k
 
 Notation and key identities
-- L := log x (not an L-function). In EGFs, e^{Lt} = x^{t}.
-- EGF (in k): ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t).
+- λ(x) := log x (preferred; older notes use L ≡ λ). In EGFs, e^{λ t} = x^{t}.
+- EGF (in k): ∑ P_k(ρ,λ) t^k/k! = − e^{λ t}/(ρ + t).
 - Linear recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
 - Appell property: ∂_L P_k = k P_{k-1}.
 - Chain rule: ∂_x P_k = (k/x) P_{k-1}.
@@ -37,3 +37,7 @@ Conventions and rendering
 
 Contributing
 - See CONTRIBUTING.md for style, math conventions, and PR checklist.
+
+General L-functions
+- P_k(ρ,·) is universal at simple zeros (depends only on ρ and λ).
+- Main-term coefficients “γ_m” generalize to c_m(L) from −L′/L(1+u) at s=1 (or from the completed L if you absorb Γ-factors). If L has no pole at 1, the x·poly(λ) main term vanishes.
