@@ -76,3 +76,20 @@ Quick references
 - EGF: ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t).
 - Recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
 - Appell: ∂_L P_k = k P_{k-1}; chain rule: ∂_x P_k = (k/x) P_{k-1}.
+
+# Documentation index (student study guide)
+
+Start here
+- Von Mangoldt Hierarchies and Stieltjes Constants in Explicit Formulas.md
+  - Use the “Student Study Guide” units: Hierarchies → Mellin/Residues → Main terms (γ_m) → Pairing.
+- Stieltjes_Mellin_Lectures.md
+  - Follow the “Study Guide track” per module; work the ψ(1/3) example and P_1(ρ,L) exercise.
+- zero-residual-polys.md
+  - Quick P_k lookup and EGFs; practice deriving P_k for k=0..2.
+- Hyperbolic weights and scaling.md
+  - Practice pairing with the short exercise block (x^{1/2} scaling, polar forms).
+
+Minimal checklist
+- Derive P_1(ρ,L) and P_2(ρ,L) (worked in both guides).
+- Compute M_k(x) at a few x using γ_m (k=0,1,2).
+- Evaluate 2 x^{1/2} Re(e^{iγL} P_k(ρ,L)) for the first zero and compare to Ψ_k(x)−M_k(x).

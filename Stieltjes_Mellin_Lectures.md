@@ -352,63 +352,112 @@ Assessment guide
 - Masters submissions: algebraic checks, short derivations, and numeric verification with concise plots.
 - PhD submissions: full derivations, numerically stable implementations (paired sums, precision control), and careful error tracking in EGF validations.
 
+## Conventions for Stieltjes constants (Hurwitz case) and quick identities
+
+We use the standard Hurwitz convention
+$$
+\zeta(s,a)\;=\;\frac{1}{s-1}\;+\;\sum_{n\ge 0}\frac{(-1)^n\,\gamma_n(a)}{n!}\,(s-1)^n,
+\qquad a\notin \{0,-1,-2,\dots\}.
+$$
+
+With this choice:
+- First generalized constant and digamma:
+  $$
+  \boxed{\,\gamma_0(a)\;=\;-\psi(a)\,}.
+  $$
+- Shift (from ζ(s,a+1)=ζ(s,a)−a^{-s}):
+  $$
+  \boxed{\,\gamma_k(a+1)\;=\;\gamma_k(a)\;-\;\frac{(\log a)^{k}}{a}\,}
+  \qquad(k\ge 0).
+  $$
+- Caution on literature: some authors define γ̃_n(a) without the factor (−1)^n in the Laurent expansion; converting to that convention flips the signs in the two boxed identities above accordingly.
+
+These conventions are used throughout the notes below and in the zero power‑sum identities.
+
 ## Power sums of zeros and closed formulas for Stieltjes constants
 
 Set u := s−1 and write the completed ξ-function Hadamard product
-- ξ’/ξ(1+u) = Σρ 1/(1+u − ρ)  (up to an additive constant, harmless for u^m, m≥1),
+- ξ’/ξ(1+u) = Σρ 1/(1+u − ρ) (up to an additive constant, harmless for u^m, m≥1),
 and relate −ζ’/ζ to ξ via
 -ζ’/ζ(1+u) = 1/u + 1/(1+u) − ξ’/ξ(1+u) + ½ ψ((1+u)/2) − ½ log π.
 
-Define the zero power sums about s=1 (symmetric summation over nontrivial zeros ρ):
-S_k := Σρ (1 − ρ)^{−k},  k≥1.
-Then expanding at u=0 and matching coefficients in
--ζ’/ζ(1+u) = 1/u + Σm≥0 η_m u^m, with η_m = (−1)^m γ_{m+1}/m!,
-one obtains, for k≥2,
-- boxed identity
-  γ_k = (k−1)! [ 1 − (1 − 2^{−k}) ζ(k) − S_k ],   (k≥2).
-- in terms of polygamma at 1/2:
-  S_k = 1 − (1 − 2^{−k}) ζ(k) − γ_k/(k−1)!.
+Define the symmetric power sums over nontrivial zeros ρ:
+$$
+S_k \;:=\; \sum_{\rho} (1-\rho)^{-k},\qquad k\ge 1,
+$$
+interpreted in the symmetric (paired) sense. Matching coefficients at u=0 and using ψ^{(n)}(1/2) identities gives, for k≥2,
+$$
+\boxed{\,\gamma_k \;=\; (k-1)!\Big[\,1 \;-\; (1-2^{-k})\,\zeta(k) \;-\; S_k\,\Big]\,}.
+$$
+Equivalently,
+$$
+\boxed{\,S_k \;=\; 1 \;-\; (1-2^{-k})\,\zeta(k) \;-\; \frac{\gamma_k}{(k-1)!}\,}\qquad(k\ge2).
+$$
 
-Notes
-- ψ^{(n)}(1/2) = (−1)^{n+1} n! (2^{n+1} − 1) ζ(n+1) was used to rewrite the Γ/ψ contribution.
-- The sum S_k is taken in the symmetric (pairwise) sense; numerically, always sum conjugate pairs.
+Remarks
+- The k=1 case carries an extra constant from the Hadamard factor and Γ/ψ terms; use k≥2 for clean identities.
+- These formulas assume the γ_k are the (ζ, a=1) constants with the convention fixed above; switching conventions flips signs as noted.
+- Scope: S_k sums are over the nontrivial zeros only; trivial zeros are absorbed by Γ/ψ terms in the smooth background.
 
-Examples
-- k=2:
-  γ_2 = 1 − (3/4) ζ(2) − Σρ (1 − ρ)^{−2}.
-- k=3:
-  γ_3 = 2! [ 1 − (1 − 1/8) ζ(3) − Σρ (1 − ρ)^{−3} ].
+### Practical algorithms (refine zeros, then recover γ_k for k≥2)
 
-Generating function and derivatives (ξ-kernel)
-- Let F(u) := −ξ’/ξ(1+u). Then for k≥1,
-  S_k = (−1)^{k−1}/(k−1)! · d^{k−1}/du^{k−1} F(u) |_{u=0}.
-- Equivalently,
-  Σ_{k≥1} S_k u^{k−1} = Σρ 1/(1+u − ρ)
-  (constant term irrelevant for k≥2).
+Zero refinement on the critical line (from γ₀)
+- Newton on ζ(s): s←s−ζ(s)/ζ′(s) with s=1/2+iγ; stop when |ζ(s)| and |Δs| are below tolerance. Fall back to a secant on Hardy Z(t) if Newton stalls.
+- Use high precision; pair conjugates, store only γ>0.
 
-Derivation sketch
-- Expand 1/(1+u−ρ) at u=0 to get power sums in (ρ−1)^{−m−1}.
-- Use −ζ’/ζ(1+u) identity above to match u^m coefficients (m≥1).
-- Convert η_m to γ_{m+1} via η_m = (−1)^m γ_{m+1}/m!.
-- Rewrite the ψ contribution using ψ^{(m)}(1/2) identity.
+γ_k from zeros via S_k(T)
+- Compute S_k(T) = 2∑_{0<γ≤T} Re((1/2−iγ)^{−k}); then
+  $$
+  \gamma_k \approx (k-1)!\Big[1-(1-2^{-k})\zeta(k) - S_k(T) - \mathrm{Tail}_k(T)\Big],\quad k\ge 2,
+  $$
+  with Tail_k(T) bounded by
+  $$
+  \frac{1}{2\pi}\,\frac{T^{1-k}}{k-1}\Big(\log T - \frac{1}{k-1}\Big).
+  $$
 
-Computational prompts (no code; pair sums)
-- Prompt A (S_k from zeros)
-  ```
-  // input: zeros {rho with Im>0}, integer k>=2
-  // compute S_k = sum over full quadruplet or conjugate pairs
-  S_k = 2 * sum_{Im(rho)>0} Re( (1 - rho)^{-k} )
-  ```
-- Prompt B (γ_k from S_k)
-  ```
-  // input: k>=2, S_k, zeta(k)
-  gamma_k = (k-1)! * ( 1 - (1 - 2^{-k}) * zeta(k) - S_k )
-  ```
-- Prompt C (consistency check via ξ-kernel)
-  ```
-  // numerically differentiate F(u) = -xi'(1+u)/xi(1+u) at u=0
-  // compare (−1)^{k−1}/(k−1)! * F^{(k-1)}(0) with S_k
-  ```
+Pseudocode
+```
+refine_zero(gamma0) -> gamma_refined
+Sk = 0
+for gamma in refined_zeros_up_to_T:
+    Sk += 2 * Re( (0.5 - 1j*gamma)**(-k) )
+tail = tail_bound(k, T)
+gamma_k = factorial(k-1) * ( 1 - (1 - 2**(-k)) * zeta(k) - Sk - tail )
+```
 
-Caveat (k=1)
-- The k=1 case (γ_1) carries an extra constant from the ξ’/ξ(1+u) additive term; the clean closed form above applies for k≥2. In practice, prefer k≥2 for zero–power-sum reconstructions of γ_k.
+
+---
+
+Study Guide track (read with the lectures)
+
+Module A — Von Mangoldt and −ζ′/ζ
+- Objectives: derive −ζ′/ζ = ∑ Λ(n) n^{−s}; explain the effect of d/ds on n^{−s}.
+- Worked example: show directly from the Euler product that −ζ′/ζ = ∑_{p,k} (log p) p^{−ks}.
+- Exercises:
+  1) Prove termwise: d^k(n^{−s})/ds^k = (−log n)^k n^{−s}.
+  2) Deduce Λ_k(n)=Λ(n)(log n)^k and Λ_k(p^r)=(log p)^{k+1} r^k.
+
+Module B — Mellin inversion and zero residues
+- Objectives: write Ψ_k as a Mellin inversion; pick residues at s=1 and s=ρ.
+- Worked example: compute P_1(ρ,L)= −L/ρ+1/ρ^2 and write the zero term x^ρ P_1(ρ,L).
+- Exercises:
+  1) Verify P_0, P_2 explicitly; confirm deg_L P_k ≤ k.
+  2) Show EGF: ∑ P_k t^k/k! = −e^{Lt}/(ρ+t).
+
+Module C — Stieltjes constants and main terms
+- Objectives: use ζ(1+u)=1/u+∑ (−1)^n γ_n u^n/n! to build M_k(x).
+- Worked example: expand M_2(x)=xL^2 − γ_0 xL − γ_1 x − γ_2 x/2.
+- Exercises:
+  1) Compute M_1(x) and M_0(x) numerically at x=10^4 (use γ_0≈0.57721).
+  2) Show S_k(x):=Ψ_k/x equals L^k minus the γ_m-mixed polynomial plus the normalized zero-sum.
+
+Module D — Practical pairing and polar forms
+- Objectives: derive x^{1/2}-centering; use conjugate/quadruplet pairing; apply polar reduction to S_k.
+- Worked example: ψ(1/3) via Gauss (from the lecture); confirm numerically to 8 d.p.
+- Exercises:
+  1) For ρ=1/2+iγ with γ≈14.1347, k=1, x=10^3, compute 2x^{1/2} Re(e^{iγL}P_1(ρ,L)).
+  2) For S_k=∑ (1−ρ)^{−k}, show quadruplet block equals 2[r_-^{−k}cos(kθ_-) + r_+^{−k}cos(kθ_+)].
+
+Quick checks and tips
+- Pair conjugates to ensure real values.
+- Tail bound for γ_k via power sums: |Tail_k(T)| ≲ (1/2π)·T^{1−k}/(k−1)·(log T − 1/(k−1)) for k≥2.

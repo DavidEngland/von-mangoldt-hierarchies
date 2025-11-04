@@ -65,7 +65,7 @@ $$
 x^{\rho} P_k(\rho,L) \;+\; x^{1-\rho} P_k(1-\rho,L)
 \;=\; 2\,x^{1/2}\Big[ C^+_{k,\rho}(L)\,\cos(\gamma L)\;+\;C^-_{k,\rho}(L)\,\sin(\gamma L)\Big],
 $$
-with amplitudes
+with amplitudes+
 $$
 C^{\pm}_{k,\rho}(L)
 =\tfrac12\Big(x^{\beta-\tfrac12} P_k(\rho,L)\;\pm\;x^{-\beta+\tfrac12} P_k(1-\rho,L)\Big).
@@ -73,6 +73,62 @@ C^{\pm}_{k,\rho}(L)
 One‑line derivation
 - Write the pair as x^{1/2}(A e^{iγL}+B e^{-iγL}) with A=x^{\beta-1/2}P_k(ρ,L), B=x^{-(\beta-1/2)}P_k(1−ρ,L), then expand into cos/sin.
 
+Why x^{1/2} and the hyperbolic weights?
+- Write ρ=β+iγ and L=log x. Then
+  $$
+  x^{\rho}=x^{1/2}\,x^{\beta-\tfrac12}e^{i\gamma L},\qquad
+  x^{1-\rho}=x^{1/2}\,x^{-(\beta-\tfrac12)}e^{-i\gamma L}.
+  $$
+  Hence
+  $$
+  x^{\rho}P_k(\rho,L)+x^{1-\rho}P_k(1-\rho,L)
+  = x^{1/2}\Big[A(L)e^{i\gamma L}+B(L)e^{-i\gamma L}\Big],
+  $$
+  with A(L)=x^{\beta-1/2}P_k(ρ,L) and B(L)=x^{-(β-1/2)}P_k(1−ρ,L). This is the source of the global x^{1/2} scale and the hyperbolic weights x^{±(β-1/2)}. Expanding into cos/sin yields the amplitudes C_k^{\pm}(L) used in the pairing formula; if β=1/2 (RH), the weights are 1.
+
 Usage
 - For real sums without any hypothesis, add the conjugate pair {ρ̄,1−ρ̄} (quadruplet) to make the total manifestly real.
 - “Implications if RH holds”: β=1/2 so C^+=Re P_k(ρ,L), C^−=Im P_k(ρ,L) and the conjugate pair {ρ,ρ̄} already suffices.
+
+## Apply pairing to power sums for Stieltjes (ζ-case)
+
+Goal: compute
+$$
+S_k = \sum_{\rho} (1-\rho)^{-k},\qquad k\ge1,
+$$
+in concise, real, and numerically stable form.
+
+Pairing identities
+- Conjugate pairing (γ>0):
+  $$
+  (1-\rho)^{-k} + (1-\bar\rho)^{-k} = 2\,\Re\big((1-\rho)^{-k}\big).
+  $$
+- Quadruplet pairing:
+  $$
+  \sum_{\sigma\in\{\rho,1-\rho,\bar\rho,1-\bar\rho\}} (1-\sigma)^{-k}
+  = 2\,\Re\big((1-\rho)^{-k} + \rho^{-k}\big).
+  $$
+
+Polar reduction (compact algebra)
+- Let ρ=β+iγ, γ>0. Set
+  $$
+  1-\rho = r_- e^{-i\theta_-},\quad r_-=\sqrt{(1-\beta)^2+\gamma^2},\quad \theta_-=\arctan\frac{\gamma}{1-\beta},
+  $$
+  $$
+  \rho = r_+ e^{i\theta_+},\quad r_+=\sqrt{\beta^2+\gamma^2},\quad \theta_+=\arctan\frac{\gamma}{\beta}.
+  $$
+- Then
+  $$
+  \Re\big((1-\rho)^{-k}\big)=r_-^{-k}\cos(k\theta_-),\qquad \Re(\rho^{-k})=r_+^{-k}\cos(k\theta_+),
+  $$
+  and the quadruplet block contributes
+  $$
+  2\Big[r_-^{-k}\cos(k\theta_-)\;+\;r_+^{-k}\cos(k\theta_+)\Big].
+  $$
+
+Stieltjes link (k ≥ 2)
+- Using
+  $$
+  \gamma_k = (k-1)!\Big[\,1 - (1-2^{-k})\zeta(k) - S_k\,\Big],
+  $$
+  you can compute γ_k from a paired evaluation of S_k. For k=1, an extra constant appears (use k≥2 for clean identities).
