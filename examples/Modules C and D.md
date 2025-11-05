@@ -91,6 +91,27 @@ $$
 $$
 (Values from the draft’s numerical steps; students should reproduce with high-precision arithmetic.)
 
+### Bridge: from Λ_k (derivatives) to P_k (residues) via k‑EGF
+
+Shift identity (pack all k)
+$$
+\sum_{k\ge0}\frac{t^k}{k!}\,(-1)^k\frac{d^k}{ds^k}\!\Big[-\frac{\zeta'(s)}{\zeta(s)}\Big]
+= -\frac{\zeta'(s-t)}{\zeta(s-t)}.
+$$
+Local model at a simple zero ρ:
+$$
+-\frac{\zeta'(s-t)}{\zeta(s-t)}\;\approx\;\frac{1}{s-\rho-t}
+\quad\Longrightarrow\quad
+\sum_{k\ge0}\frac{t^k}{k!}\,P_k(\rho,L) \;=\; -\,\frac{e^{Lt}}{\rho+t},\ \ L=\log x.
+$$
+
+Immediate consequences
+- Recurrence: ρ P_{k+1} + (k+1) P_k = −L^{k+1}.
+- Appell: ∂_L P_k = k P_{k−1}.
+- Checks: P_1= −L/ρ + 1/ρ^2, P_2= −L^2/ρ + 2L/ρ^2 − 2/ρ^3.
+
+Use: insert x^{\rho}P_k into the conjugate/quadruplet pairing formulas to obtain real, x^{1/2}–scaled oscillations.
+
 ### 📝 Exercises (Module D)
 
 #### 1) Compute $2x^{1/2}\,\mathrm{Re}(e^{i\gamma L}P_1(\rho,L))$ for $x=10^3$

@@ -89,6 +89,38 @@ $$
 
 ---
 
+### Λ_k ↔ P_k (log‑damping polynomials): k‑EGF shift and local model
+
+All k at once (shift identity)
+$$
+\sum_{k\ge0}\frac{t^k}{k!}\,(-1)^k\frac{d^k}{ds^k}\!\Big[-\frac{\zeta'(s)}{\zeta(s)}\Big]
+\;=\; -\frac{\zeta'(s-t)}{\zeta(s-t)}.
+$$
+Near a simple zero ρ, −ζ′/ζ(s−t) ≍ 1/(s−ρ−t). The Mellin kernel x^s/s turns the residue at s=ρ into the k‑EGF for the polynomial factor:
+$$
+\boxed{\;\sum_{k\ge0}\frac{t^k}{k!}\,P_k(\rho,\log x)\;=\; -\,\frac{e^{(\log x)\,t}}{\rho+t}\;}
+$$
+
+Extracted identities (used throughout)
+- Recurrence:
+  $$
+  \rho\,P_{k+1} + (k+1)\,P_k = -(\log x)^{k+1}.
+  $$
+- Appell:
+  $$
+  \partial_{\log x} P_k = k\,P_{k-1}.
+  $$
+
+Micro‑proof (k=1,2)
+- Expand −e^{Lt}/(ρ+t)= −(1+Lt+L^2t^2/2+…)(ρ^{-1} − ρ^{-2}t + ρ^{-3}t^2 − …), match t^k/k!.
+- One recovers P_1= −L/ρ + 1/ρ^2 and P_2= −L^2/ρ + 2L/ρ^2 − 2/ρ^3 as in the residue derivation.
+
+Interpretation
+- Λ_k comes from k derivatives on −ζ′/ζ (global Dirichlet side).
+- P_k is the local (at ρ) response of those k derivatives inside the Mellin inversion; the EGF glues the two perspectives and is the fastest way to propagate P_k across k.
+
+---
+
 Bridging analytic to computation (how residues become numbers)
 - Each simple zero ρ contributes the explicitly computable term $x^{\rho}P_k(\rho,\log x)$ with $P_k$ from (★).
 - Numerically:

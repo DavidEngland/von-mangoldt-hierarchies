@@ -399,32 +399,47 @@ Remarks
 - These formulas assume the γ_k are the (ζ, a=1) constants with the convention fixed above; switching conventions flips signs as noted.
 - Scope: S_k sums are over the nontrivial zeros only; trivial zeros are absorbed by Γ/ψ terms in the smooth background.
 
-### Practical algorithms (refine zeros, then recover γ_k for k≥2)
+### Bridge: von Mangoldt hierarchies Λ_k and log‑damping polynomials P_k
 
-Zero refinement on the critical line (from γ₀)
-- Newton on ζ(s): s←s−ζ(s)/ζ′(s) with s=1/2+iγ; stop when |ζ(s)| and |Δs| are below tolerance. Fall back to a secant on Hardy Z(t) if Newton stalls.
-- Use high precision; pair conjugates, store only γ>0.
+Key operator identity (all k at once)
+- Shift in s generates the hierarchy:
+  $$
+  \sum_{k\ge0}\frac{t^k}{k!}\,(-1)^k\frac{d^k}{ds^k}\!\Big[-\frac{\zeta'(s)}{\zeta(s)}\Big]
+  \;=\; -\frac{\zeta'(s-t)}{\zeta(s-t)}.
+  $$
+- Near a simple zero ρ of ζ, −ζ′/ζ(s−t) ≍ 1/(s−ρ−t). In the Mellin integrand x^s/s, the residue at s=ρ produces
+  $$
+  \sum_{k\ge0}\frac{t^k}{k!}\,P_k(\rho,L)
+  \;=\;
+  -\,\frac{e^{Lt}}{\rho+t},\qquad L:=\log x.
+  $$
 
-γ_k from zeros via S_k(T)
-- Compute S_k(T) = 2∑_{0<γ≤T} Re((1/2−iγ)^{−k}); then
+Consequences (equivalent forms)
+- Recurrence (compare coefficients of t^{k+1}):
   $$
-  \gamma_k \approx (k-1)!\Big[1-(1-2^{-k})\zeta(k) - S_k(T) - \mathrm{Tail}_k(T)\Big],\quad k\ge 2,
+  \boxed{\;\rho\,P_{k+1}(\rho,L) + (k+1)\,P_k(\rho,L) \;=\; -\,L^{k+1}\;}\qquad(k\ge0).
   $$
-  with Tail_k(T) bounded by
+- Appell/derivative in L:
   $$
-  \frac{1}{2\pi}\,\frac{T^{1-k}}{k-1}\Big(\log T - \frac{1}{k-1}\Big).
+  \boxed{\;\partial_L P_k(\rho,L) \;=\; k\,P_{k-1}(\rho,L)\;},\qquad
+  \boxed{\;\partial_L\!\big[x^{\rho} P_k(\rho,L)\big] \;=\; -\,x^{\rho}\,L^{k}\;}.
+  $$
+- Closed form (already used in the notes):
+  $$
+  P_k(\rho,L)=\sum_{j=0}^k (-1)^{j+1}\frac{k!}{(k-j)!}\,\frac{L^{\,k-j}}{\rho^{\,j+1}}.
   $$
 
-Pseudocode
-```
-refine_zero(gamma0) -> gamma_refined
-Sk = 0
-for gamma in refined_zeros_up_to_T:
-    Sk += 2 * Re( (0.5 - 1j*gamma)**(-k) )
-tail = tail_bound(k, T)
-gamma_k = factorial(k-1) * ( 1 - (1 - 2**(-k)) * zeta(k) - Sk - tail )
-```
+How this links Λ_k to P_k
+- Λ_k are the Dirichlet coefficients of (−1)^k d^k/ds^k[−ζ′/ζ], i.e., what sits under the Mellin integral.
+- P_k are the residue polynomials you get when evaluating those k derivatives at s=ρ inside the Mellin inversion. The EGF −e^{Lt}/(ρ+t) is the local (simple‑zero) model of the entire k‑hierarchy at ρ.
 
+Worked micro‑check (k=1,2 from the recurrence)
+- k=0 gives P_0 = −1/ρ.
+- k=1: ρ P_1 + 1·P_0 = −L^1 ⇒ P_1 = −L/ρ + 1/ρ^2.
+- k=2: ρ P_2 + 2 P_1 = −L^2 ⇒ P_2 = −L^2/ρ + 2L/ρ^2 − 2/ρ^3.
+
+Use in practice
+- The explicit formula terms are x^{\rho}P_k(\rho,L); pairing/quadruplet sums make them real and yield the x^{1/2} oscillations explained earlier.
 
 ---
 
