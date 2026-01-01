@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this research in your work, please cite it as below."
+authors:
+  - family-names: "England"
+    given-names: "David"
+title: "Von Mangoldt Hierarchies: Zero-Residue Polynomials and Explicit Formulas"
+version: 0.1.0
+date-released: 2024-01-01
+url: "https://github.com/davidengland/von-mangoldt-hierarchies"
+repository-code: "https://github.com/davidengland/von-mangoldt-hierarchies"
+keywords:
+  - "analytic number theory"
+  - "L-functions"
+  - "explicit formulas"
+  - "zero-residue polynomials"
+  - "von Mangoldt function"
+  - "Riemann zeta function"
+license: MIT
+abstract: >
+  A framework for analyzing zeros of L-functions through 
+  zero-residue polynomials P_k(ρ, λ). Includes explicit 
+  formulas for higher von Mangoldt functions, pairing 
+  identities for oscillatory sums, and computational tools.

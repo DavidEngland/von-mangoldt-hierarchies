@@ -1,95 +1,82 @@
-# Documentation
+# Documentation Index
 
-This directory contains organized documentation for the von Mangoldt hierarchies research.
+## Quick Navigation
 
-## 📁 Organization
+### Core Theory
+1. **[Zero-Residual Polynomials](zero-residual-polys.md)** — Definitions, closed forms, EGF, recurrence, Appell property
+2. **[Leibniz Rule](Leibniz%20Rule.md)** — Residue derivation, functional equation symmetry, reflection pairing
+3. **[Compact Formula](Compact%20formula.md)** — Compact representations with exercises and computational prompts
+4. **[Hierarchy Interdependence Theorem](Hierarchy%20Interdependence%20Theorem.md)** — Derivative interdependence and ODEs
 
-### Core Theory (`theory/`)
-- Mathematical foundations and definitions
-- Proofs and derivations
-- Research notes
+### Advanced Topics
+- **[Quadruplet Generating Function](../quad%20upon%20generating%20function.md)** — EGF kernel and coefficient extraction for quadruplet sums
 
-### Lectures (`lectures/`)
-- Course materials and lecture notes
-- Graduate-level presentations
-- Student exercises
+## Notation Reference
 
-### Computational (`computational/`)
-- Implementation guides
-- Numerical methods
-- Code examples
+### Standard Symbols
+- `λ(x) := log x` — preferred notation (older notes may use `L`)
+- `ρ` — zero of L-function
+- `γ := Im(ρ)` — imaginary part of zero
+- `P_k(ρ, λ)` — k-th zero-residue polynomial
 
-### Examples (`examples/`)
-- Worked examples
-- Tutorial materials
-- Quick start guides
+### Key Identities
 
-## 🎯 Recommended Reading Order
+**Exponential Generating Function:**
+```
+∑_{k≥0} P_k(ρ,λ) t^k/k! = − e^{λt}/(ρ + t)
+```
 
-1. **Introduction**: Start with the main [README](../README.md)
-2. **Core Concepts**: Read [von Mangoldt hierarchies](../von%20Mangoldt%20hierarchies.md)
-3. **Implementation**: Follow [Handoff for grad student](../Handoff_for_grad_student.md)
-4. **Advanced Theory**: Explore [Notes on von Mangoldt Hierarchies](../Notes%20on%20von%20Mangoldt%20Hierarchies.md)
+**Linear Recurrence:**
+```
+ρ P_{k+1} + (k+1) P_k = − λ^{k+1}
+```
 
-## 🔧 Contributing to Documentation
+**Appell Property:**
+```
+∂_λ P_k = k P_{k-1}
+```
 
-When adding new documentation:
-- Use clear, descriptive filenames
-- Include mathematical notation in LaTeX format
-- Provide both theory and computational examples
-- Cross-reference related documents
+**Chain Rule:**
+```
+∂_x P_k = (k/x) P_{k-1}
+```
 
-# docs — Conventions and Preview
+**Single-Zero ODE:**
+```
+x d/dx [x^ρ P_k] = − x^ρ λ^k
+```
 
-Conventions
-- Inline math: `$...$`; display: `$$ ... $$`.
-- Code blocks fenced with triple backticks and a language hint where possible.
-- Prefer filenames without spaces or `#` to avoid preview issues.
+## Pairing Formulas
 
-Recommended preview
-- VS Code + “Markdown Preview Enhanced” (MathJax/KaTeX enabled).
-- GitHub renders most Markdown but not all math; use local preview for verification.
+### Quadruplet (Always Real)
+Sum over `{ρ, 1−ρ, ρ̄, 1−ρ̄}`:
+```
+2 x^{1/2} [A_k(λ) cos(γλ) + B_k(λ) sin(γλ)]
+```
 
-Checklist
-- Ensure every fenced block is closed.
-- Check paired `$$`.
-- Avoid nested triple fences.
+### Conjugate Pairing
+Simplification when RH holds (not assumed by default).
 
-# Documentation index and conventions
+## Exercise Levels
 
-Notation sanity
-- L := log x (not an L-function). In EGFs with parameter t, e^{Lt} = x^{t}.
-- ρ = β + iγ denotes a (simple) zero; Q(ρ) = {ρ, 1−ρ, ρ̄, 1−ρ̄}.
-- “No RH assumed” by default; RH is only used to simplify pairings as a consequence.
+- **Computational** — Verify identities numerically or symbolically
+- **Masters** — Prove structural theorems using given tools
+- **PhD** — Extend theory or discover new connections
 
-Core documents
-- zero-residual-polys.md — P_k closed forms, EGF, recurrence, Appell links, trivial zeros note.
-- Compact formula.md — cheat sheet, examples, and problem prompts (Masters/PhD).
-- Hierarchy Interdependence Theorem.md — ∂_L and ∂_x identities; ODEs and prompts.
-- ../quad upon generating function.md — quadruplet EGF kernel, harmonic decomposition, coefficient extraction.
-- ../Practical Pairing of the Quadruplet of a Simple Zero.md — (ρ,1−ρ) practical pairing.
+## Reading Order
 
-Rendering
-- Inline math: $...$; display: $$ ... $$. Close all fences. Prefer filenames without spaces or ‘#’.
+### First Time
+1. Start with [zero-residual-polys.md](zero-residual-polys.md) for definitions
+2. Read [Leibniz Rule.md](Leibniz%20Rule.md) for derivation techniques
+3. Work through [Compact formula.md](Compact%20formula.md) exercises
 
-Quick references
-- EGF: ∑ P_k(ρ,L) t^k/k! = − e^{Lt}/(ρ + t).
-- Recurrence: ρ P_{k+1} + (k+1) P_k = − L^{k+1}.
-- Appell: ∂_L P_k = k P_{k-1}; chain rule: ∂_x P_k = (k/x) P_{k-1}.
+### Deep Dive
+1. Study [Hierarchy Interdependence Theorem.md](Hierarchy%20Interdependence%20Theorem.md)
+2. Explore quadruplet theory in [quad upon generating function.md](../quad%20upon%20generating%20function.md)
 
-# Documentation index (student study guide)
+## Related Files
 
-Start here
-- Von Mangoldt Hierarchies and Stieltjes Constants in Explicit Formulas.md
-  - Use the “Student Study Guide” units: Hierarchies → Mellin/Residues → Main terms (γ_m) → Pairing.
-- Stieltjes_Mellin_Lectures.md
-  - Follow the “Study Guide track” per module; work the ψ(1/3) example and P_1(ρ,L) exercise.
-- zero-residual-polys.md
-  - Quick P_k lookup and EGFs; practice deriving P_k for k=0..2.
-- Hyperbolic weights and scaling.md
-  - Practice pairing with the short exercise block (x^{1/2} scaling, polar forms).
-
-Minimal checklist
-- Derive P_1(ρ,L) and P_2(ρ,L) (worked in both guides).
-- Compute M_k(x) at a few x using γ_m (k=0,1,2).
-- Evaluate 2 x^{1/2} Re(e^{iγL} P_k(ρ,L)) for the first zero and compare to Ψ_k(x)−M_k(x).
+- **[Main README](../README.md)** — Repository overview
+- **[Open Questions](../OPEN_QUESTIONS.md)** — Unresolved problems and conjectures
+- **[TODO](../TODO.md)** — Implementation and documentation tasks
+- **[Contributing Guide](../CONTRIBUTING.md)** — Style and PR guidelines

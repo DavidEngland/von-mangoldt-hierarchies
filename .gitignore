@@ -1,0 +1,43 @@
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Node modules (if JS tooling is added)
+node_modules/
+package-lock.json
+
+# Python cache (if Python tools are added)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Data and output directories (keep structure, ignore content)
+data/*.csv
+data/*.json
+!data/.gitkeep
+
+# Build artifacts
+dist/
+build/
